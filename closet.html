@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLOSETDAY 클로젯데이 | 날씨·기분·퍼스널컬러로 완성하는 오늘의 코디</title>
+<meta name="description" content="내 옷을 등록해 디지털 옷장을 만들고, 날씨·상황·계절·기분·퍼스널컬러에 맞는 코디를 추천받고, 동네 이웃과 옷을 나누는 스타일 플랫폼">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="stylesheet" href="closet-style.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div class="app-header-inner">
+    <a href="#" class="brand" data-nav="home">CLOSET<span class="brand-accent">DAY</span></a>
+    <nav class="top-nav" id="top-nav">
+      <button type="button" class="top-nav-link is-active" data-view="home">홈</button>
+      <button type="button" class="top-nav-link" data-view="styling">맞춤 코디</button>
+      <button type="button" class="top-nav-link" data-view="closet">내 옷장</button>
+      <button type="button" class="top-nav-link" data-view="market">동네 옷장</button>
+      <button type="button" class="top-nav-link" data-view="reference">레퍼런스</button>
+      <button type="button" class="top-nav-link" data-view="mypage">마이페이지</button>
+    </nav>
+    <button type="button" id="about-open-btn" class="icon-btn" aria-label="서비스 소개">ⓘ</button>
+  </div>
+</header>
+
+<p id="connection-status" class="connection-status" hidden></p>
+
+<main class="app-main">
+
+  <!-- ===================== HOME (trend feed) ===================== -->
+  <section id="view-home" class="view is-active">
+    <div class="home-hero">
+      <p class="home-hero-kicker">Today's pick</p>
+      <h1>날씨, 기분, 상황까지 반영한<br>나만의 코디를 받아보세요</h1>
+      <button type="button" class="btn btn-primary btn-cta" data-nav="styling">맞춤 코디 받으러 가기 →</button>
+    </div>
+
+    <div class="reassure-banner">
+      <span class="rb-emoji">🤍</span>
+      <span>오늘 뭐 입을지 고민이신가요? 괜찮아요, 몇 번만 눌러보면 금방 찾아드릴게요. 정답은 없으니 편하게 골라보세요.</span>
+    </div>
+
+    <div class="trending-strip-wrap">
+      <div class="trending-strip-head">
+        <h3>🔥 요즘 뜨는 아이템</h3>
+        <span>모자·쥬얼리·벨트까지</span>
+      </div>
+      <div class="trending-strip" id="trending-strip"></div>
+    </div>
+
+    <div class="seasonal-strip-wrap">
+      <div class="seasonal-strip-head">
+        <h3>☀️❄️ 시즌 스페셜</h3>
+        <span>수영복부터 스키복까지</span>
+      </div>
+      <div class="seasonal-strip" id="seasonal-strip"></div>
+    </div>
+
+    <div class="palette-strip-wrap">
+      <div class="palette-strip-head">
+        <h3>🎨 베스트 컬러 조합</h3>
+        <span>눌러서 색상코드 복사 · 그냥 재미로 보는 코너예요</span>
+      </div>
+      <div class="palette-strip" id="palette-strip"></div>
+    </div>
+
+    <div class="trend-filter-row" id="trend-filter-row">
+      <button type="button" class="filter-chip is-active" data-tpo="전체">전체</button>
+      <button type="button" class="filter-chip" data-tpo="데일리">데일리</button>
+      <button type="button" class="filter-chip" data-tpo="오피스">오피스</button>
+      <button type="button" class="filter-chip" data-tpo="모임·데이트">데이트</button>
+      <button type="button" class="filter-chip" data-tpo="운동">액티브</button>
+      <button type="button" class="filter-chip" data-tpo="포멀">포멀</button>
+    </div>
+
+    <div class="trend-masonry" id="trend-masonry"></div>
+  </section>
+
+  <!-- ===================== STYLING (core feature) ===================== -->
+  <section id="view-styling" class="view">
+    <div class="styling-head">
+      <h2>오늘, 나에게 맞는 코디는?</h2>
+      <p class="section-desc">날씨·상황·계절·기분·퍼스널컬러까지 반영해서 추천해드려요.</p>
+    </div>
+
+    <div class="styling-wizard">
+      <div class="wizard-block">
+        <div class="wizard-block-head">
+          <h3>📍 오늘의 날씨</h3>
+          <button type="button" id="weather-auto-btn" class="btn btn-outline btn-small">실시간 날씨로 설정</button>
+        </div>
+        <p id="weather-status" class="weather-status"></p>
+        <div class="chip-row">
+          <input type="radio" name="wizard-season" id="wizard-spring" value="봄" checked>
+          <label for="wizard-spring" class="chip">봄</label>
+          <input type="radio" name="wizard-season" id="wizard-summer" value="여름">
+          <label for="wizard-summer" class="chip">여름</label>
+          <input type="radio" name="wizard-season" id="wizard-fall" value="가을">
+          <label for="wizard-fall" class="chip">가을</label>
+          <input type="radio" name="wizard-season" id="wizard-winter" value="겨울">
+          <label for="wizard-winter" class="chip">겨울</label>
+        </div>
+      </div>
+
+      <div class="wizard-block">
+        <h3>🧭 오늘의 상황</h3>
+        <div class="chip-row">
+          <input type="radio" name="wizard-tpo" id="wizard-tpo-daily" value="데일리" checked>
+          <label for="wizard-tpo-daily" class="chip">데일리</label>
+          <input type="radio" name="wizard-tpo" id="wizard-tpo-office" value="오피스">
+          <label for="wizard-tpo-office" class="chip">오피스</label>
+          <input type="radio" name="wizard-tpo" id="wizard-tpo-date" value="모임·데이트">
+          <label for="wizard-tpo-date" class="chip">모임·데이트</label>
+          <input type="radio" name="wizard-tpo" id="wizard-tpo-active" value="운동">
+          <label for="wizard-tpo-active" class="chip">운동</label>
+          <input type="radio" name="wizard-tpo" id="wizard-tpo-formal" value="포멀">
+          <label for="wizard-tpo-formal" class="chip">포멀</label>
+        </div>
+      </div>
+
+      <div class="wizard-block">
+        <h3>🌤️ 오늘의 기분</h3>
+        <div class="chip-row">
+          <input type="radio" name="wizard-mood" id="wizard-mood-comfy" value="편안하게" checked>
+          <label for="wizard-mood-comfy" class="chip">편안하게</label>
+          <input type="radio" name="wizard-mood" id="wizard-mood-confident" value="자신감있게">
+          <label for="wizard-mood-confident" class="chip">자신감있게</label>
+          <input type="radio" name="wizard-mood" id="wizard-mood-lovely" value="러블리하게">
+          <label for="wizard-mood-lovely" class="chip">러블리하게</label>
+          <input type="radio" name="wizard-mood" id="wizard-mood-chic" value="시크하게">
+          <label for="wizard-mood-chic" class="chip">시크하게</label>
+          <input type="radio" name="wizard-mood" id="wizard-mood-bright" value="화사하게">
+          <label for="wizard-mood-bright" class="chip">화사하게</label>
+        </div>
+      </div>
+
+      <div class="wizard-block">
+        <h3>🎨 퍼스널 컬러 <span class="optional-tag">(선택)</span></h3>
+        <div class="chip-row">
+          <input type="radio" name="wizard-pc" id="wizard-pc-none" value="" checked>
+          <label for="wizard-pc-none" class="chip">아직 몰라요</label>
+          <input type="radio" name="wizard-pc" id="wizard-pc-spring" value="봄 웜톤">
+          <label for="wizard-pc-spring" class="chip">봄 웜톤</label>
+          <input type="radio" name="wizard-pc" id="wizard-pc-summer" value="여름 쿨톤">
+          <label for="wizard-pc-summer" class="chip">여름 쿨톤</label>
+          <input type="radio" name="wizard-pc" id="wizard-pc-fall" value="가을 웜톤">
+          <label for="wizard-pc-fall" class="chip">가을 웜톤</label>
+          <input type="radio" name="wizard-pc" id="wizard-pc-winter" value="겨울 쿨톤">
+          <label for="wizard-pc-winter" class="chip">겨울 쿨톤</label>
+        </div>
+      </div>
+
+      <button type="button" id="generate-outfit-btn" class="btn btn-primary btn-large btn-block">나만의 코디 추천받기</button>
+    </div>
+
+    <div id="outfit-result" class="outfit-result"></div>
+  </section>
+
+  <!-- ===================== CLOSET ===================== -->
+  <section id="view-closet" class="view">
+    <div class="section-head-row">
+      <h2>내 옷장</h2>
+      <p class="section-desc">사진을 올리면 배경을 지우고 정리해드려요. 태그를 자세히 달수록 맞춤 코디 추천이 정확해져요.</p>
+    </div>
+
+    <div class="closet-layout">
+      <div class="upload-panel">
+        <label for="closet-file-input" class="upload-dropzone" id="upload-dropzone">
+          <span class="upload-icon">＋</span>
+          <span class="upload-text">옷 사진 올리기</span>
+          <span class="upload-subtext">클릭해서 사진을 선택하세요</span>
+        </label>
+        <input type="file" id="closet-file-input" accept="image/*" hidden>
+
+        <div class="upload-preview-wrap" id="upload-preview-wrap" hidden>
+          <div class="preview-canvases">
+            <div class="preview-box">
+              <p class="preview-label">원본</p>
+              <canvas id="canvas-original"></canvas>
+            </div>
+            <div class="preview-box checker-bg">
+              <p class="preview-label">배경 제거 결과</p>
+              <canvas id="canvas-result"></canvas>
+            </div>
+          </div>
+
+          <div class="tolerance-row">
+            <label for="tolerance-slider">제거 민감도</label>
+            <input type="range" id="tolerance-slider" min="10" max="120" value="45">
+            <span id="tolerance-value">45</span>
+          </div>
+          <p class="tolerance-hint">배경이 단색(벽·바닥)일수록 결과가 깔끔해요.</p>
+
+          <form id="closet-meta-form" class="meta-form">
+            <fieldset class="chip-group" data-field="category">
+              <legend>카테고리</legend>
+              <div class="chip-row">
+                <input type="radio" name="closet-category" id="cat-top" value="상의" checked>
+                <label for="cat-top" class="chip">상의</label>
+                <input type="radio" name="closet-category" id="cat-bottom" value="하의">
+                <label for="cat-bottom" class="chip">하의</label>
+                <input type="radio" name="closet-category" id="cat-outer" value="아우터">
+                <label for="cat-outer" class="chip">아우터</label>
+                <input type="radio" name="closet-category" id="cat-shoes" value="신발">
+                <label for="cat-shoes" class="chip">신발</label>
+                <input type="radio" name="closet-category" id="cat-acc" value="액세서리">
+                <label for="cat-acc" class="chip">액세서리</label>
+              </div>
+            </fieldset>
+
+            <fieldset class="chip-group" data-field="season">
+              <legend>어울리는 계절 <span class="optional-tag">(복수 선택)</span></legend>
+              <div class="chip-row">
+                <input type="checkbox" name="closet-season" id="season-spring" value="봄">
+                <label for="season-spring" class="chip">봄</label>
+                <input type="checkbox" name="closet-season" id="season-summer" value="여름">
+                <label for="season-summer" class="chip">여름</label>
+                <input type="checkbox" name="closet-season" id="season-fall" value="가을">
+                <label for="season-fall" class="chip">가을</label>
+                <input type="checkbox" name="closet-season" id="season-winter" value="겨울">
+                <label for="season-winter" class="chip">겨울</label>
+              </div>
+            </fieldset>
+
+            <fieldset class="chip-group" data-field="tpo">
+              <legend>어울리는 상황 <span class="optional-tag">(복수 선택)</span></legend>
+              <div class="chip-row">
+                <input type="checkbox" name="closet-tpo" id="tpo-daily" value="데일리">
+                <label for="tpo-daily" class="chip">데일리</label>
+                <input type="checkbox" name="closet-tpo" id="tpo-office" value="오피스">
+                <label for="tpo-office" class="chip">오피스</label>
+                <input type="checkbox" name="closet-tpo" id="tpo-date" value="모임·데이트">
+                <label for="tpo-date" class="chip">모임·데이트</label>
+                <input type="checkbox" name="closet-tpo" id="tpo-active" value="운동">
+                <label for="tpo-active" class="chip">운동</label>
+                <input type="checkbox" name="closet-tpo" id="tpo-formal" value="포멀">
+                <label for="tpo-formal" class="chip">포멀</label>
+              </div>
+            </fieldset>
+
+            <fieldset class="chip-group" data-field="mood">
+              <legend>어울리는 기분 <span class="optional-tag">(복수 선택)</span></legend>
+              <div class="chip-row">
+                <input type="checkbox" name="closet-mood" id="mood-comfy" value="편안하게">
+                <label for="mood-comfy" class="chip">편안하게</label>
+                <input type="checkbox" name="closet-mood" id="mood-confident" value="자신감있게">
+                <label for="mood-confident" class="chip">자신감있게</label>
+                <input type="checkbox" name="closet-mood" id="mood-lovely" value="러블리하게">
+                <label for="mood-lovely" class="chip">러블리하게</label>
+                <input type="checkbox" name="closet-mood" id="mood-chic" value="시크하게">
+                <label for="mood-chic" class="chip">시크하게</label>
+                <input type="checkbox" name="closet-mood" id="mood-bright" value="화사하게">
+                <label for="mood-bright" class="chip">화사하게</label>
+              </div>
+            </fieldset>
+
+            <fieldset class="chip-group" data-field="personalcolor">
+              <legend>어울리는 퍼스널 컬러 <span class="optional-tag">(선택)</span></legend>
+              <div class="chip-row">
+                <input type="radio" name="closet-pc" id="pc-none" value="" checked>
+                <label for="pc-none" class="chip">상관없음</label>
+                <input type="radio" name="closet-pc" id="pc-spring" value="봄 웜톤">
+                <label for="pc-spring" class="chip">봄 웜톤</label>
+                <input type="radio" name="closet-pc" id="pc-summer" value="여름 쿨톤">
+                <label for="pc-summer" class="chip">여름 쿨톤</label>
+                <input type="radio" name="closet-pc" id="pc-fall" value="가을 웜톤">
+                <label for="pc-fall" class="chip">가을 웜톤</label>
+                <input type="radio" name="closet-pc" id="pc-winter" value="겨울 쿨톤">
+                <label for="pc-winter" class="chip">겨울 쿨톤</label>
+              </div>
+            </fieldset>
+
+            <div class="meta-form-actions">
+              <button type="button" id="closet-reset-btn" class="btn btn-outline btn-small">다시 올리기</button>
+              <button type="submit" class="btn btn-primary btn-small">옷장에 추가하기</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="gallery-panel">
+        <div class="category-tabs" id="category-tabs">
+          <button type="button" class="filter-chip is-active" data-cat="전체">전체</button>
+          <button type="button" class="filter-chip" data-cat="상의">상의</button>
+          <button type="button" class="filter-chip" data-cat="하의">하의</button>
+          <button type="button" class="filter-chip" data-cat="아우터">아우터</button>
+          <button type="button" class="filter-chip" data-cat="신발">신발</button>
+          <button type="button" class="filter-chip" data-cat="액세서리">액세서리</button>
+        </div>
+        <div id="closet-gallery" class="closet-grid"></div>
+        <p id="closet-empty" class="empty-msg">아직 등록된 옷이 없어요. 왼쪽에서 사진을 올려 첫 옷을 등록해보세요 🧺</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MARKET ===================== -->
+  <section id="view-market" class="view">
+    <div class="section-head-row">
+      <h2>우리 동네 옷장</h2>
+      <p class="section-desc">당장 필요한 옷을 동네에서 저렴하게 사고, 안 입는 옷은 교환하거나 나눠요.</p>
+    </div>
+
+    <div class="market-layout">
+      <form id="market-form" class="meta-form market-form">
+        <h3 class="form-title">옷 등록하기</h3>
+
+        <label class="field-label" for="market-title">제목</label>
+        <input type="text" id="market-title" placeholder="예: 딱 한 번 입은 트렌치코트" required maxlength="40">
+
+        <fieldset class="chip-group">
+          <legend>카테고리</legend>
+          <div class="chip-row">
+            <input type="radio" name="market-category" id="m-cat-top" value="상의" checked>
+            <label for="m-cat-top" class="chip">상의</label>
+            <input type="radio" name="market-category" id="m-cat-bottom" value="하의">
+            <label for="m-cat-bottom" class="chip">하의</label>
+            <input type="radio" name="market-category" id="m-cat-outer" value="아우터">
+            <label for="m-cat-outer" class="chip">아우터</label>
+            <input type="radio" name="market-category" id="m-cat-shoes" value="신발">
+            <label for="m-cat-shoes" class="chip">신발</label>
+            <input type="radio" name="market-category" id="m-cat-etc" value="기타">
+            <label for="m-cat-etc" class="chip">기타</label>
+          </div>
+        </fieldset>
+
+        <fieldset class="chip-group">
+          <legend>거래 방식</legend>
+          <div class="chip-row">
+            <input type="radio" name="market-dealtype" id="deal-sale" value="판매" checked>
+            <label for="deal-sale" class="chip">판매</label>
+            <input type="radio" name="market-dealtype" id="deal-exchange" value="교환">
+            <label for="deal-exchange" class="chip">교환</label>
+            <input type="radio" name="market-dealtype" id="deal-free" value="나눔">
+            <label for="deal-free" class="chip">나눔</label>
+          </div>
+        </fieldset>
+
+        <div class="price-row" id="price-row">
+          <label for="market-price">가격 (원)</label>
+          <input type="number" id="market-price" min="0" step="1000" placeholder="예: 15000">
+        </div>
+
+        <fieldset class="chip-group">
+          <legend>상태</legend>
+          <div class="chip-row">
+            <input type="radio" name="market-condition" id="cond-new" value="새 상품" checked>
+            <label for="cond-new" class="chip">새 상품</label>
+            <input type="radio" name="market-condition" id="cond-like" value="거의 새 것">
+            <label for="cond-like" class="chip">거의 새 것</label>
+            <input type="radio" name="market-condition" id="cond-used" value="사용감 있음">
+            <label for="cond-used" class="chip">사용감 있음</label>
+          </div>
+        </fieldset>
+
+        <label class="field-label" for="market-location">동네</label>
+        <input type="text" id="market-location" placeholder="예: 역삼동" required maxlength="20">
+
+        <label class="field-label" for="market-desc">설명</label>
+        <textarea id="market-desc" rows="3" placeholder="사이즈, 구매 시기, 상태 등을 솔직하게 알려주세요"></textarea>
+
+        <label class="urgent-check">
+          <input type="checkbox" id="market-urgent">
+          🔥 내일 당장 필요해요 / 급하게 처분할게요
+        </label>
+
+        <label for="market-file-input" class="upload-dropzone upload-dropzone-small">
+          <span class="upload-icon">＋</span>
+          <span class="upload-text">사진 첨부 (선택)</span>
+        </label>
+        <input type="file" id="market-file-input" accept="image/*" hidden>
+        <p id="market-photo-status" class="weather-status"></p>
+
+        <button type="submit" class="btn btn-primary btn-block">동네 옷장에 올리기</button>
+      </form>
+
+      <div class="market-list-panel">
+        <div class="market-filters">
+          <div class="chip-row" id="deal-filter-row">
+            <button type="button" class="filter-chip is-active" data-deal="전체">전체</button>
+            <button type="button" class="filter-chip" data-deal="판매">판매</button>
+            <button type="button" class="filter-chip" data-deal="교환">교환</button>
+            <button type="button" class="filter-chip" data-deal="나눔">나눔</button>
+          </div>
+          <div class="filter-inline-row">
+            <input type="text" id="location-filter" placeholder="동네로 검색 (예: 역삼동)">
+            <label class="urgent-check urgent-check-inline">
+              <input type="checkbox" id="urgent-filter">
+              🔥 급한 물건만
+            </label>
+          </div>
+        </div>
+        <div id="market-grid" class="market-grid"></div>
+        <p id="market-empty" class="empty-msg">조건에 맞는 옷이 아직 없어요.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== REFERENCE (style community) ===================== -->
+  <section id="view-reference" class="view">
+    <div class="section-head-row">
+      <h2>스타일 레퍼런스</h2>
+      <p class="section-desc">인스타그램·유튜브·틱톡에서 본 코디 영상을 링크로 공유하고, 코디 레퍼런스로 함께 모아봐요.</p>
+    </div>
+
+    <div class="market-layout">
+      <form id="reference-form" class="meta-form">
+        <h3 class="form-title">레퍼런스 등록하기</h3>
+
+        <label class="field-label" for="reference-url">영상 링크</label>
+        <input type="url" id="reference-url" placeholder="예: https://www.instagram.com/reel/..." required>
+
+        <label class="field-label" for="reference-title">제목</label>
+        <input type="text" id="reference-title" placeholder="예: 가을 데일리룩 3가지 조합" required maxlength="60">
+
+        <label class="field-label" for="reference-creator">크리에이터 <span class="optional-tag">(선택)</span></label>
+        <input type="text" id="reference-creator" placeholder="예: @style_creator" maxlength="40">
+
+        <label class="field-label" for="reference-tags">태그 <span class="optional-tag">(쉼표로 구분, 선택)</span></label>
+        <input type="text" id="reference-tags" placeholder="예: 데일리, 가을, 오피스룩" maxlength="60">
+
+        <button type="submit" class="btn btn-primary btn-block">레퍼런스 올리기</button>
+      </form>
+
+      <div class="market-list-panel">
+        <div id="reference-grid" class="reference-grid"></div>
+        <p id="reference-empty" class="empty-msg">아직 올라온 레퍼런스가 없어요. 마음에 들었던 코디 영상을 처음으로 공유해보세요 🎬</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MYPAGE (profile) ===================== -->
+  <section id="view-mypage" class="view">
+    <div class="section-head-row">
+      <h2>마이페이지</h2>
+      <p class="section-desc">키·몸무게·나이·체형을 알려주시면 더 잘 맞는 핏과 스타일로 추천해드려요. 다 채우지 않아도 괜찮아요.</p>
+    </div>
+
+    <form id="profile-form" class="meta-form" style="max-width:520px;">
+      <div class="profile-grid-row">
+        <div>
+          <label class="field-label" for="profile-height">키 (cm)</label>
+          <input type="number" id="profile-height" min="120" max="210" placeholder="예: 165">
+        </div>
+        <div>
+          <label class="field-label" for="profile-weight">몸무게 (kg)</label>
+          <input type="number" id="profile-weight" min="30" max="180" placeholder="예: 58">
+        </div>
+        <div>
+          <label class="field-label" for="profile-age">나이</label>
+          <input type="number" id="profile-age" min="10" max="100" placeholder="예: 28">
+        </div>
+      </div>
+
+      <fieldset class="chip-group">
+        <legend>성별 <span class="optional-tag">(선택)</span></legend>
+        <div class="chip-row">
+          <input type="radio" name="profile-gender" id="pg-none" value="" checked>
+          <label for="pg-none" class="chip">선택 안 함</label>
+          <input type="radio" name="profile-gender" id="pg-female" value="여성">
+          <label for="pg-female" class="chip">여성</label>
+          <input type="radio" name="profile-gender" id="pg-male" value="남성">
+          <label for="pg-male" class="chip">남성</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="chip-group">
+        <legend>체형 <span class="optional-tag">(선택, 알고 계신 만큼만)</span></legend>
+        <div class="chip-row">
+          <input type="radio" name="profile-bodytype" id="pb-none" value="" checked>
+          <label for="pb-none" class="chip">선택 안 함</label>
+          <input type="radio" name="profile-bodytype" id="pb-hourglass" value="모래시계형">
+          <label for="pb-hourglass" class="chip" title="어깨와 골반 너비가 비슷하고 허리가 잘록한 편">모래시계형</label>
+          <input type="radio" name="profile-bodytype" id="pb-rectangle" value="직사각형">
+          <label for="pb-rectangle" class="chip" title="어깨·허리·골반 너비가 비슷하고 굴곡이 적은 편">직사각형</label>
+          <input type="radio" name="profile-bodytype" id="pb-invtriangle" value="역삼각형">
+          <label for="pb-invtriangle" class="chip" title="어깨가 골반보다 넓은 편">역삼각형</label>
+          <input type="radio" name="profile-bodytype" id="pb-triangle" value="삼각형">
+          <label for="pb-triangle" class="chip" title="골반이 어깨보다 넓은 편">삼각형</label>
+          <input type="radio" name="profile-bodytype" id="pb-round" value="둥근형">
+          <label for="pb-round" class="chip" title="허리·배 주변에 볼륨이 있는 편">둥근형</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="chip-group">
+        <legend>퍼스널 컬러 <span class="optional-tag">(선택)</span></legend>
+        <div class="chip-row">
+          <input type="radio" name="profile-pc" id="ppc-none" value="" checked>
+          <label for="ppc-none" class="chip">아직 몰라요</label>
+          <input type="radio" name="profile-pc" id="ppc-spring" value="봄 웜톤">
+          <label for="ppc-spring" class="chip">봄 웜톤</label>
+          <input type="radio" name="profile-pc" id="ppc-summer" value="여름 쿨톤">
+          <label for="ppc-summer" class="chip">여름 쿨톤</label>
+          <input type="radio" name="profile-pc" id="ppc-fall" value="가을 웜톤">
+          <label for="ppc-fall" class="chip">가을 웜톤</label>
+          <input type="radio" name="profile-pc" id="ppc-winter" value="겨울 쿨톤">
+          <label for="ppc-winter" class="chip">겨울 쿨톤</label>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="btn btn-primary btn-block">프로필 저장하기</button>
+    </form>
+
+    <div id="profile-summary" class="profile-summary-card" hidden></div>
+  </section>
+
+</main>
+
+<nav class="bottom-tab-bar" id="bottom-tab-bar">
+  <button type="button" class="bottom-tab is-active" data-view="home"><span>🏠</span>홈</button>
+  <button type="button" class="bottom-tab" data-view="styling"><span>✨</span>맞춤코디</button>
+  <button type="button" class="bottom-tab" data-view="closet"><span>👕</span>내옷장</button>
+  <button type="button" class="bottom-tab" data-view="market"><span>📍</span>동네옷장</button>
+  <button type="button" class="bottom-tab" data-view="reference"><span>🎬</span>레퍼런스</button>
+  <button type="button" class="bottom-tab" data-view="mypage"><span>🙂</span>마이</button>
+</nav>
+
+<!-- 룩 상세보기 모달 -->
+<div id="quickview-modal" class="modal-overlay" hidden>
+  <div class="modal-box">
+    <button type="button" class="modal-close" id="quickview-close-btn" aria-label="닫기">✕</button>
+    <div id="quickview-body"></div>
+  </div>
+</div>
+
+<!-- AI 코디 착용 이미지 모달 -->
+<div id="tryon-modal" class="modal-overlay" hidden>
+  <div class="modal-box">
+    <button type="button" class="modal-close" id="tryon-close-btn" aria-label="닫기">✕</button>
+    <div id="tryon-body"></div>
+  </div>
+</div>
+
+<!-- 서비스 소개 모달 -->
+<div id="about-modal" class="modal-overlay" hidden>
+  <div class="modal-box modal-box-wide">
+    <button type="button" class="modal-close" id="about-close-btn" aria-label="닫기">✕</button>
+    <h2 class="about-title">CLOSETDAY 소개</h2>
+    <p class="about-sub">내 옷장에서 시작해서 동네와 함께 완성하는 스타일 플랫폼이에요.</p>
+
+    <h3 class="about-section-title">실행 로드맵</h3>
+    <div class="roadmap-timeline">
+      <div class="timeline-card">
+        <p class="roadmap-num">01</p>
+        <h4>기획 타임박싱</h4>
+        <p>하루 1시간 단위로 기획을 쪼개서 진행해요. 지치지 않고 속도를 낼 수 있어요.</p>
+      </div>
+      <div class="timeline-card">
+        <p class="roadmap-num">02</p>
+        <h4>MVP로 가설 검증하기</h4>
+        <p>핵심 가설(옷을 찍어 올릴까? 동네에서 나눌까?) 하나부터 빠르게 검증해요.</p>
+      </div>
+      <div class="timeline-card">
+        <p class="roadmap-num">03</p>
+        <h4>마켓플레이스 뼈대 구축</h4>
+        <p>수요자와 공급자를 매끄럽게 연결할 신뢰·거래 정책을 먼저 세워요.</p>
+      </div>
+      <div class="timeline-card">
+        <p class="roadmap-num">04</p>
+        <h4>커뮤니티 가이드라인</h4>
+        <p>사람의 행동에는 합당한 이유가 있다는 관점을 가이드라인에 녹여요.</p>
+      </div>
+    </div>
+
+    <h3 class="about-section-title">커뮤니티 가이드라인</h3>
+    <div class="guideline-grid">
+      <div class="guideline-card"><span class="guideline-icon">🪞</span><h4>있는 그대로, 솔직하게</h4><p>옷의 상태를 솔직하게 알려주세요.</p></div>
+      <div class="guideline-card"><span class="guideline-icon">⏰</span><h4>약속은 가볍게, 존중은 무겁게</h4><p>급한 사정은 먼저 알려주면 충분해요.</p></div>
+      <div class="guideline-card"><span class="guideline-icon">💬</span><h4>가격보다 이야기</h4><p>다들 그럴 만한 사정이 있어요.</p></div>
+      <div class="guideline-card"><span class="guideline-icon">🔁</span><h4>나눔은 다시 흘려보내기</h4><p>받은 마음을 다음 사람에게 전해주세요.</p></div>
+      <div class="guideline-card"><span class="guideline-icon">📍</span><h4>안전한 직거래</h4><p>사람이 많은 공공장소에서 만나요.</p></div>
+      <div class="guideline-card"><span class="guideline-icon">🌱</span><h4>선한 의도를 먼저 믿기</h4><p>조금 더 너그러운 마음으로 대화해주세요.</p></div>
+    </div>
+
+    <p class="about-footnote">이 페이지는 Supabase에 연결된 프로토타입이에요. 내 옷장은 비공개(익명 로그인 기준), 동네 옷장은 공개 게시판이에요. 배경 제거는 간이 알고리즘이라 실제 제품에서는 전용 API 연동을 권장해요. 코디 트렌드 추천이 궁금하다면 <a href="index.html">LOOKCODI</a>도 만나보세요.</p>
+  </div>
+</div>
+
+<footer class="app-footer">
+  <p>CLOSETDAY — 내 옷장에서 시작해서 동네와 함께 완성하는 스타일</p>
+  <button type="button" class="footer-link" id="about-open-btn-2">서비스 소개 &amp; 로드맵 보기</button>
+</footer>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
+<script src="closet-config.js" defer></script>
+<script src="closet-script.js" defer></script>
+</body>
+</html>

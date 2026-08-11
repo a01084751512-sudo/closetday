@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOOKCODI 룩코디 | 나에게 맞는 오늘의 코디</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#top" class="logo">
+      <span class="logo-en">LOOKCODI</span>
+      <span class="logo-kr">룩코디</span>
+    </a>
+    <nav class="site-nav">
+      <a href="#trend">트렌드</a>
+      <a href="#colorquiz">퍼스널 컬러</a>
+      <a href="#recommend">코디 추천</a>
+      <a href="#how">이용 방법</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <p class="eyebrow">Style, made personal</p>
+    <h1>나의 하루에 어울리는<br>코디를 찾아드려요</h1>
+    <p class="hero-desc">성별, 나이, 날씨, 체형, 그리고 오늘의 일정까지 — 누구나 쉽게 받는 맞춤 코디 추천</p>
+    <a href="#recommend" class="btn btn-primary btn-large">코디 추천받기</a>
+  </section>
+
+  <section id="trend" class="trend-section">
+    <div class="section-head">
+      <p class="eyebrow">Trending now</p>
+      <h2>지금 뜨는 2026 트렌드 코디</h2>
+      <p class="section-desc">패션 매거진과 런웨이에서 확인한 2026년 핵심 트렌드를 코디로 풀어봤어요.</p>
+    </div>
+    <div id="trend-grid" class="result-grid"></div>
+  </section>
+
+  <section id="colorquiz" class="colorquiz-section">
+    <div class="section-head">
+      <p class="eyebrow">Find your colors</p>
+      <h2>퍼스널 컬러 자가진단</h2>
+      <p class="section-desc">손목 혈관 색, 액세서리, 화이트 톤 등 간단한 질문으로 나에게 어울리는 컬러 무드를 찾아보세요.</p>
+    </div>
+
+    <form id="colorquiz-form" class="recommend-form colorquiz-form">
+      <fieldset class="chip-group">
+        <legend>1. 손목 안쪽 혈관 색은?</legend>
+        <div class="chip-row">
+          <input type="radio" name="quiz-vein" id="vein-green" value="warm" checked>
+          <label for="vein-green" class="chip">초록빛이 도는 편</label>
+
+          <input type="radio" name="quiz-vein" id="vein-blue" value="cool">
+          <label for="vein-blue" class="chip">파란빛이 도는 편</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="chip-group">
+        <legend>2. 얼굴 옆에 댔을 때 더 자연스러운 액세서리는?</legend>
+        <div class="chip-row">
+          <input type="radio" name="quiz-metal" id="metal-gold" value="warm" checked>
+          <label for="metal-gold" class="chip">골드</label>
+
+          <input type="radio" name="quiz-metal" id="metal-silver" value="cool">
+          <label for="metal-silver" class="chip">실버</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="chip-group">
+        <legend>3. 더 잘 어울리는 화이트는?</legend>
+        <div class="chip-row">
+          <input type="radio" name="quiz-white" id="white-ivory" value="warm" checked>
+          <label for="white-ivory" class="chip">아이보리 (오프 화이트)</label>
+
+          <input type="radio" name="quiz-white" id="white-pure" value="cool">
+          <label for="white-pure" class="chip">퓨어 화이트</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="chip-group">
+        <legend>4. 평소 잘 어울린다는 말을 듣는 색은?</legend>
+        <div class="chip-row">
+          <input type="radio" name="quiz-color" id="color-camel" value="warm" checked>
+          <label for="color-camel" class="chip">카멜 / 브라운 / 카키</label>
+
+          <input type="radio" name="quiz-color" id="color-black" value="cool">
+          <label for="color-black" class="chip">블랙 / 그레이 / 네이비</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="chip-group">
+        <legend>5. 더 끌리는 분위기는?</legend>
+        <div class="chip-row">
+          <input type="radio" name="quiz-mood" id="mood-soft" value="soft" checked>
+          <label for="mood-soft" class="chip">화사하고 부드러운 톤</label>
+
+          <input type="radio" name="quiz-mood" id="mood-vivid" value="vivid">
+          <label for="mood-vivid" class="chip">선명하고 강렬한 톤</label>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="btn btn-primary btn-large btn-submit">내 퍼스널 컬러 보기</button>
+    </form>
+
+    <div id="colorquiz-result" class="colorquiz-result" hidden></div>
+  </section>
+
+  <section id="colorguide" class="colorguide-section">
+    <div class="section-head">
+      <p class="eyebrow">Color guide</p>
+      <h2>코디 색상 조합 가이드</h2>
+      <p class="section-desc">패션 매거진에 자주 등장하는 색상 조합 원칙 3가지예요.</p>
+    </div>
+    <div class="roadmap-grid">
+      <div class="roadmap-card">
+        <p class="roadmap-num">01</p>
+        <h3>나만의 시그니처 3색</h3>
+        <p>옷장의 메인 컬러를 3가지로 정해서 돌려 입으면 매치하기 쉬워지고 코디 고민이 줄어들어요.</p>
+      </div>
+      <div class="roadmap-card">
+        <p class="roadmap-num">02</p>
+        <h3>톤온톤 매칭</h3>
+        <p>브라운·베이지·카키처럼 같은 계열의 톤을 이어서 매치하면 차분하고 고급스러운 분위기가 나요.</p>
+      </div>
+      <div class="roadmap-card">
+        <p class="roadmap-num">03</p>
+        <h3>화이트·베이지에도 톤이 있어요</h3>
+        <p>웜톤이라면 아이보리(오프 화이트)와 옐로 베이지를, 쿨톤이라면 퓨어 화이트와 그레이 베이지를 선택해보세요.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="recommend" class="recommend-section">
+    <div class="section-head">
+      <p class="eyebrow">Step 1</p>
+      <h2>몇 가지만 알려주세요</h2>
+      <p class="section-desc">선택하신 조건에 맞는 코디를 바로 추천해 드릴게요.</p>
+    </div>
+
+    <form id="recommend-form" class="recommend-form">
+
+      <fieldset class="chip-group" data-field="gender">
+        <legend>성별</legend>
+        <div class="chip-row">
+          <input type="radio" name="gender" id="gender-female" value="female" checked>
+          <label for="gender-female" class="chip">여성</label>
+
+          <input type="radio" name="gender" id="gender-male" value="male">
+          <label for="gender-male" class="chip">남성</label>
+
+          <input type="radio" name="gender" id="gender-unisex" value="unisex">
+          <label for="gender-unisex" class="chip">성별 무관</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="chip-group" data-field="age">
+        <legend>연령대</legend>
+        <div class="chip-row">
+          <input type="radio" name="age" id="age-teen" value="teen">
+          <label for="age-teen" class="chip">10대</label>
+
+          <input type="radio" name="age" id="age-twenties" value="twenties" checked>
+          <label for="age-twenties" class="chip">20대</label>
+
+          <input type="radio" name="age" id="age-thirties" value="thirties">
+          <label for="age-thirties" class="chip">30대</label>
+
+          <input type="radio" name="age" id="age-fortyplus" value="fortyplus">
+          <label for="age-fortyplus" class="chip">40대 이상</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="chip-group" data-field="occasion">
+        <legend>오늘의 일정</legend>
+        <div class="chip-row">
+          <input type="radio" name="occasion" id="occasion-student" value="student">
+          <label for="occasion-student" class="chip">학교 / 학생</label>
+
+          <input type="radio" name="occasion" id="occasion-office" value="office" checked>
+          <label for="occasion-office" class="chip">직장 / 오피스</label>
+
+          <input type="radio" name="occasion" id="occasion-casual" value="casual">
+          <label for="occasion-casual" class="chip">편안한 일상</label>
+
+          <input type="radio" name="occasion" id="occasion-active" value="active">
+          <label for="occasion-active" class="chip">운동 / 야외활동</label>
+
+          <input type="radio" name="occasion" id="occasion-formal" value="formal">
+          <label for="occasion-formal" class="chip">특별한 자리</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="chip-group" data-field="season">
+        <legend>오늘의 날씨</legend>
+        <div class="weather-auto-row">
+          <button type="button" id="weather-auto-btn" class="btn btn-outline btn-small">📍 실시간 날씨로 자동 설정</button>
+          <p id="weather-status" class="weather-status"></p>
+        </div>
+        <div class="chip-row">
+          <input type="radio" name="season" id="season-spring" value="spring" checked>
+          <label for="season-spring" class="chip">봄 / 선선함</label>
+
+          <input type="radio" name="season" id="season-summer" value="summer">
+          <label for="season-summer" class="chip">여름 / 더움</label>
+
+          <input type="radio" name="season" id="season-fall" value="fall">
+          <label for="season-fall" class="chip">가을 / 쌀쌀함</label>
+
+          <input type="radio" name="season" id="season-winter" value="winter">
+          <label for="season-winter" class="chip">겨울 / 추움</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="chip-group" data-field="bodytype">
+        <legend>체형 정보 <span class="optional-tag">(선택)</span></legend>
+        <div class="height-row">
+          <label for="height-input">키 (cm)</label>
+          <input type="number" id="height-input" name="height" min="120" max="210" placeholder="예: 165">
+          <label for="weight-input">체중 (kg)</label>
+          <input type="number" id="weight-input" name="weight" min="30" max="180" placeholder="예: 58">
+        </div>
+        <div class="chip-row">
+          <input type="radio" name="bodytype" id="bodytype-none" value="none" checked>
+          <label for="bodytype-none" class="chip">선택 안 함</label>
+
+          <input type="radio" name="bodytype" id="bodytype-hourglass" value="hourglass">
+          <label for="bodytype-hourglass" class="chip" title="어깨와 골반 너비가 비슷하고 허리가 잘록한 편">모래시계형</label>
+
+          <input type="radio" name="bodytype" id="bodytype-rectangle" value="rectangle">
+          <label for="bodytype-rectangle" class="chip" title="어깨, 허리, 골반 너비가 비슷하고 굴곡이 적은 편">직사각형</label>
+
+          <input type="radio" name="bodytype" id="bodytype-invertedtriangle" value="invertedTriangle">
+          <label for="bodytype-invertedtriangle" class="chip" title="어깨가 골반보다 넓은 편">역삼각형</label>
+
+          <input type="radio" name="bodytype" id="bodytype-triangle" value="triangle">
+          <label for="bodytype-triangle" class="chip" title="골반이 어깨보다 넓은 편">삼각형</label>
+
+          <input type="radio" name="bodytype" id="bodytype-round" value="round">
+          <label for="bodytype-round" class="chip" title="허리와 배 주변에 볼륨이 있는 편">둥근형</label>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="btn btn-primary btn-large btn-submit">내 코디 찾기</button>
+    </form>
+  </section>
+
+  <section id="results" class="results-section" hidden>
+    <div class="section-head">
+      <p class="eyebrow">Step 2</p>
+      <h2>이런 코디는 어떠세요?</h2>
+      <p class="section-desc">마음에 드는 아이템은 쇼핑 버튼으로, 옷을 입힌 모습은 미리보기 버튼으로 확인해보세요.</p>
+    </div>
+    <p id="personal-tip" class="personal-tip"></p>
+    <div id="result-grid" class="result-grid"></div>
+    <div class="result-actions">
+      <button type="button" id="regenerate-btn" class="btn btn-outline">다른 코디 더 보기</button>
+    </div>
+  </section>
+
+  <section id="how" class="how-section">
+    <div class="section-head">
+      <p class="eyebrow">How it works</p>
+      <h2>이용 방법</h2>
+      <p class="section-desc">네 단계면 충분해요. 모든 정보는 선택 사항을 제외하면 입력 즉시 결과가 바뀌어요.</p>
+    </div>
+    <div class="howto-grid">
+      <div class="roadmap-card">
+        <p class="roadmap-num">01</p>
+        <h3>퍼스널 컬러 진단 (선택)</h3>
+        <p>혈관 색, 액세서리, 화이트 톤 등 5개 질문에 답하면 나에게 어울리는 웜톤/쿨톤 컬러 무드를 알려드려요. 건너뛰어도 코디 추천은 그대로 받을 수 있어요.</p>
+      </div>
+      <div class="roadmap-card">
+        <p class="roadmap-num">02</p>
+        <h3>기본 정보 선택</h3>
+        <p>성별, 연령대, 오늘의 일정, 날씨를 선택해요. 날씨는 "📍 실시간 날씨로 자동 설정" 버튼으로 위치 기반 자동 입력도 가능해요.</p>
+      </div>
+      <div class="roadmap-card">
+        <p class="roadmap-num">03</p>
+        <h3>체형 정보 입력 (선택)</h3>
+        <p>키·체중·체형 실루엣을 입력하면 내 몸에 더 잘 맞는 핏과 실루엣 위주로 추천해드려요. 입력하지 않아도 무방해요.</p>
+      </div>
+      <div class="roadmap-card">
+        <p class="roadmap-num">04</p>
+        <h3>코디 확인 & 쇼핑</h3>
+        <p>"내 코디 찾기"를 누르면 추천 코디가 나와요. "👗 코디 입혀보기"로 옷 형태를 미리 보고, 쇼핑 버튼으로 비슷한 상품을 바로 검색할 수 있어요. 마음에 안 들면 "다른 코디 더 보기"로 다시 추천받아요.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="roadmap" class="how-section">
+    <div class="section-head">
+      <p class="eyebrow">Coming soon</p>
+      <h2>앞으로 더 발전시킬 예정이에요</h2>
+    </div>
+    <div class="roadmap-grid">
+      <div class="roadmap-card">
+        <p class="roadmap-num">01</p>
+        <h3>실사 같은 AI 이미지 생성</h3>
+        <p>지금은 일러스트 아바타로 코디를 미리 보여드려요. 추후 실제 사람이 입은 듯한 AI 생성 이미지로 고도화할 예정이에요.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>LOOKCODI 룩코디 — 누구나 쉽게 받는 맞춤 코디 추천</p>
+  <p class="footer-note">추천 코디는 예시 데이터 기반이며, 실제 최신 트렌드와 다를 수 있어요. 쇼핑 링크는 각 쇼핑몰의 검색 결과로 연결됩니다. 체형 추천은 일반적인 스타일링 팁으로, 참고용으로만 봐주세요.</p>
+</footer>
+
+<script src="script.js" defer></script>
+</body>
+</html>
