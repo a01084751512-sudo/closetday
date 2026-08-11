@@ -16,204 +16,135 @@ function buildShopLink(keyword) {
   return site.urlTemplate.replace('{q}', encodeURIComponent(keyword));
 }
 
+// 아래 이미지들은 모두 다운로드해서 실제 내용을 직접 확인한 뒤,
+// 사진에 실제로 보이는 것과 제목·아이템 구성이 일치하도록 작성했어요.
 const TREND_LOOKS = [
   {
-    id: 'look-01', img: 'https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?auto=format&fit=crop&w=500&q=70',
-    title: '베이지 니트 & 와이드 슬랙스', subtitle: '편안한 주말 데일리 룩',
-    tpo: ['데일리'], season: ['가을', '겨울'], mood: ['편안하게', '시크하게'],
-    items: [{ name: '베이지 라운드 니트', color: '#D9C9AE' }, { name: '와이드 슬랙스', color: '#8A8378' }, { name: '스웨이드 로퍼', color: '#5B4636' }],
+    id: 'look-01', img: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=500&q=70',
+    title: '버건디 롱코트 쇼핑룩', subtitle: '쇼핑하기 좋은 가을 데일리',
+    tpo: ['데일리'], season: ['가을', '겨울'], mood: ['자신감있게'],
+    items: [{ name: '버건디 롱코트', color: '#6E2A32' }, { name: '화이트 이너 톱', color: '#F3F1EA' }, { name: '선글라스', color: '#232323' }],
   },
   {
-    id: 'look-02', img: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=500&q=70',
-    title: '화이트 셔츠 오피스룩', subtitle: '신뢰감 있는 출근 스타일',
-    tpo: ['오피스'], season: ['봄', '가을'], mood: ['자신감있게'],
-    items: [{ name: '화이트 셔츠', color: '#F3F1EA' }, { name: '슬림 슬랙스', color: '#232323' }, { name: '포인티드 플랫', color: '#2B2118' }],
+    id: 'look-02', img: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=500&q=70',
+    title: '스트라이프 와이드팬츠 스트릿룩', subtitle: '과감한 스트릿 무드',
+    tpo: ['데일리'], season: ['봄', '여름'], mood: ['화사하게', '시크하게'],
+    items: [{ name: '화이트 크롭탑', color: '#F3F1EA' }, { name: '블랙&화이트 스트라이프 와이드팬츠', color: '#2B2B2B' }, { name: '레드 미니백', color: '#B23A2E' }],
   },
   {
-    id: 'look-03', img: 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=500&q=70',
-    title: '블랙 미니 원피스', subtitle: '설레는 저녁 데이트룩',
-    tpo: ['모임·데이트'], season: ['봄', '여름'], mood: ['러블리하게', '화사하게'],
-    items: [{ name: '블랙 미니 원피스', color: '#232323' }, { name: '스트랩 힐', color: '#7A1F2B' }, { name: '미니 숄더백', color: '#B08D57' }],
-  },
-  {
-    id: 'look-04', img: 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=500&q=70',
-    title: '롱 트렌치 레이어드', subtitle: '가을 스트릿 무드',
-    tpo: ['데일리'], season: ['가을'], mood: ['시크하게'],
-    items: [{ name: '롱 트렌치코트', color: '#C9AE81' }, { name: '터틀넥 니트', color: '#37342E' }, { name: '스트레이트 데님', color: '#41586E' }],
-  },
-  {
-    id: 'look-05', img: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=500&q=70',
-    title: '니트 베스트 캠퍼스룩', subtitle: '편안한 학교·일상 코디',
-    tpo: ['데일리'], season: ['봄', '가을'], mood: ['편안하게'],
-    items: [{ name: '체크 니트 베스트', color: '#8A9A7E' }, { name: '화이트 셔츠', color: '#F3F1EA' }, { name: '치노 팬츠', color: '#C9BFA5' }],
-  },
-  {
-    id: 'look-06', img: 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&w=500&q=70',
-    title: '테일러드 자켓 세미포멀', subtitle: '중요한 자리를 위한 룩',
-    tpo: ['포멀'], season: ['가을', '겨울'], mood: ['자신감있게'],
-    items: [{ name: '울 테일러드 자켓', color: '#2B2E33' }, { name: '슬림 슬랙스', color: '#232323' }, { name: '옥스포드 슈즈', color: '#3B2A1E' }],
-  },
-  {
-    id: 'look-07', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&q=70',
-    title: '레더 자켓 스트릿', subtitle: '개성 있는 시크 무드',
-    tpo: ['데일리'], season: ['가을', '겨울'], mood: ['시크하게'],
-    items: [{ name: '블랙 레더 자켓', color: '#1C1C1C' }, { name: '크롭 니트', color: '#6E6259' }, { name: '와이드 데님', color: '#2E3A4A' }],
-  },
-  {
-    id: 'look-08', img: 'https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?auto=format&fit=crop&w=500&q=70',
-    title: '코튼 플로럴 원피스', subtitle: '화사한 만남 자리에',
+    id: 'look-03', img: 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&w=500&q=70',
+    title: '화이트 오프숄더 미니원피스', subtitle: '햇살 좋은 날의 데이트룩',
     tpo: ['모임·데이트'], season: ['여름'], mood: ['화사하게', '러블리하게'],
-    items: [{ name: '플로럴 원피스', color: '#E7B9C4' }, { name: '스트로우 백', color: '#C9A66B' }, { name: '스트랩 샌들', color: '#D8CBB5' }],
+    items: [{ name: '오프숄더 미니원피스', color: '#F3F1EA' }, { name: '화이트 스니커즈', color: '#EDEAE2' }],
   },
   {
-    id: 'look-09', img: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?auto=format&fit=crop&w=500&q=70',
-    title: '액티브 트레이닝 세트업', subtitle: '가볍게 움직이는 날',
-    tpo: ['운동'], season: ['봄', '여름', '가을'], mood: ['편안하게'],
-    items: [{ name: '트레이닝 세트업', color: '#3A4A52' }, { name: '런닝화', color: '#E5E1D8' }, { name: '크로스백', color: '#232323' }],
-  },
-  {
-    id: 'look-10', img: 'https://images.unsplash.com/photo-1554568218-0f1715e72254?auto=format&fit=crop&w=500&q=70',
-    title: '패턴 셔츠 캐주얼', subtitle: '여름 데일리 포인트룩',
-    tpo: ['데일리'], season: ['여름'], mood: ['화사하게'],
-    items: [{ name: '패턴 반팔 셔츠', color: '#D98C4A' }, { name: '와이드 쇼츠', color: '#E5E1D8' }, { name: '캔버스 스니커즈', color: '#F3F1EA' }],
-  },
-  {
-    id: 'look-11', img: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=500&q=70',
-    title: '롱 코트 미니멀룩', subtitle: '차분한 겨울 오피스',
-    tpo: ['오피스'], season: ['겨울'], mood: ['시크하게'],
-    items: [{ name: '롱 울 코트', color: '#37342E' }, { name: '터틀넥 니트', color: '#8A8378' }, { name: '스트레이트 슬랙스', color: '#2B2118' }],
-  },
-  {
-    id: 'look-12', img: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=500&q=70',
-    title: '니트 원피스 데이트룩', subtitle: '포근하고 러블리하게',
-    tpo: ['모임·데이트'], season: ['겨울'], mood: ['러블리하게'],
-    items: [{ name: '리브 니트 원피스', color: '#B4776B' }, { name: '롱부츠', color: '#3B2A1E' }, { name: '체인 숄더백', color: '#232323' }],
-  },
-  {
-    id: 'look-13', img: 'https://images.unsplash.com/photo-1495385794356-15371f348c31?auto=format&fit=crop&w=500&q=70',
-    title: '와이드 데님 캐주얼', subtitle: '힘 안 준 듯 편안하게',
-    tpo: ['데일리'], season: ['봄', '가을'], mood: ['편안하게'],
-    items: [{ name: '루즈핏 맨투맨', color: '#C9BFA5' }, { name: '와이드 데님', color: '#41586E' }, { name: '캔버스 스니커즈', color: '#F3F1EA' }],
-  },
-  {
-    id: 'look-14', img: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=500&q=70',
-    title: '미니멀 셋업 오피스', subtitle: '깔끔하게 각 잡힌 하루',
-    tpo: ['오피스'], season: ['봄', '여름'], mood: ['자신감있게'],
-    items: [{ name: '세미 셋업 자켓', color: '#8A8378' }, { name: '셋업 슬랙스', color: '#8A8378' }, { name: '심플 로퍼', color: '#2B2118' }],
-  },
-  {
-    id: 'look-15', img: 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=500&q=70',
-    title: '플리츠 스커트 데이트룩', subtitle: '사랑스럽고 단정하게',
-    tpo: ['모임·데이트'], season: ['봄'], mood: ['러블리하게'],
-    items: [{ name: '니트 톱', color: '#E7B9C4' }, { name: '플리츠 미디스커트', color: '#F3F1EA' }, { name: '메리제인 슈즈', color: '#5B4636' }],
-  },
-  {
-    id: 'look-16', img: 'https://images.unsplash.com/photo-1485462537746-965f33f7f6a7?auto=format&fit=crop&w=500&q=70',
-    title: '스트라이프 셔츠 캐주얼', subtitle: '산뜻한 여름 데일리',
-    tpo: ['데일리'], season: ['여름'], mood: ['화사하게'],
-    items: [{ name: '스트라이프 셔츠', color: '#8AA6C1' }, { name: '와이드 쇼츠', color: '#F3F1EA' }, { name: '스트랩 샌들', color: '#D8CBB5' }],
-  },
-  {
-    id: 'look-17', img: 'https://images.unsplash.com/photo-1554412933-514a83d2f3c8?auto=format&fit=crop&w=500&q=70',
-    title: '블레이저 세미포멀', subtitle: '중요한 미팅이 있는 날',
+    id: 'look-04', img: 'https://images.unsplash.com/photo-1495385794356-15371f348c31?auto=format&fit=crop&w=500&q=70',
+    title: '틸 홀터넥 점프수트', subtitle: '존재감 있는 세미포멀 룩',
     tpo: ['포멀'], season: ['봄', '가을'], mood: ['자신감있게'],
-    items: [{ name: '더블 블레이저', color: '#37342E' }, { name: '슬림 슬랙스', color: '#232323' }, { name: '옥스포드 슈즈', color: '#3B2A1E' }],
+    items: [{ name: '틸 홀터넥 점프수트', color: '#1F6F6B' }],
   },
   {
-    id: 'look-18', img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=500&q=70',
-    title: '레이어드 가디건룩', subtitle: '살랑이는 가을 산책',
+    id: 'look-05', img: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=500&q=70',
+    title: '플로럴 랩원피스', subtitle: '바닷가에서 어울리는 룩',
+    tpo: ['모임·데이트'], season: ['여름'], mood: ['러블리하게'],
+    items: [{ name: '플로럴 랩원피스', color: '#E7B9C4' }, { name: '스트로우 백', color: '#C9A66B' }],
+  },
+  {
+    id: 'look-06', img: 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=500&q=70',
+    title: '그래픽 티셔츠 스트릿룩', subtitle: '무심한 듯 힘 뺀 캐주얼',
+    tpo: ['데일리'], season: ['봄', '여름'], mood: ['시크하게'],
+    items: [{ name: '블랙 그래픽 티셔츠', color: '#1C1C1C' }, { name: '레이어드 쇼츠', color: '#8A8378' }],
+  },
+  {
+    id: 'look-07', img: 'https://images.unsplash.com/photo-1554412933-514a83d2f3c8?auto=format&fit=crop&w=500&q=70',
+    title: '핑크 롱코트 가을룩', subtitle: '고풍스러운 골목길 산책',
+    tpo: ['데일리'], season: ['가을'], mood: ['자신감있게'],
+    items: [{ name: '핑크 롱코트', color: '#D9A9A6' }, { name: '블랙 타이츠', color: '#1C1C1C' }, { name: '블랙 앵클부츠', color: '#2B2118' }],
+  },
+  {
+    id: 'look-08', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=500&q=70',
+    title: '블랙 하이패션 코트룩', subtitle: '존재감 있는 겨울 아우터',
+    tpo: ['포멀'], season: ['가을', '겨울'], mood: ['자신감있게'],
+    items: [{ name: '블랙 러플 롱코트', color: '#1C1C1C' }, { name: '와이드브림 햇', color: '#1C1C1C' }],
+  },
+  {
+    id: 'look-09', img: 'https://images.unsplash.com/photo-1479064555552-3ef4979f8908?auto=format&fit=crop&w=500&q=70',
+    title: '블랙 수트 포멀룩', subtitle: '신뢰감을 더하는 정장 룩',
+    tpo: ['포멀'], season: ['봄', '가을', '겨울'], mood: ['자신감있게'],
+    items: [{ name: '블랙 수트 자켓', color: '#1C1C1C' }, { name: '버건디 타이', color: '#6E2A32' }, { name: '화이트 셔츠', color: '#F3F1EA' }],
+  },
+  {
+    id: 'look-10', img: 'https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?auto=format&fit=crop&w=500&q=70',
+    title: '카멜 코트 & 니트 세트', subtitle: '도심 속 오피스 룩',
+    tpo: ['오피스'], season: ['가을'], mood: ['시크하게'],
+    items: [{ name: '카멜 롱코트', color: '#C9A66B' }, { name: '올리브 니트탑', color: '#7C7A5E' }, { name: '올리브 미디스커트', color: '#7C7A5E' }],
+  },
+  {
+    id: 'look-11', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=500&q=70',
+    title: '데님자켓 후드 레이어드룩', subtitle: '힘 안 준 편안한 조합',
     tpo: ['데일리'], season: ['가을'], mood: ['편안하게'],
-    items: [{ name: '롱 가디건', color: '#B4A088' }, { name: '이너 티셔츠', color: '#F3F1EA' }, { name: '스트레이트 데님', color: '#41586E' }],
+    items: [{ name: '데님자켓', color: '#5B7A9B' }, { name: '그레이 후드티', color: '#8A8378' }],
   },
   {
-    id: 'look-19', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=500&q=70',
-    title: '쿨톤 니트 데이트', subtitle: '차분하고 시크하게',
-    tpo: ['모임·데이트'], season: ['겨울'], mood: ['시크하게'],
-    items: [{ name: '터틀넥 니트', color: '#5B6B7A' }, { name: '레더 스커트', color: '#1C1C1C' }, { name: '앵클부츠', color: '#2B2118' }],
+    id: 'look-12', img: 'https://images.unsplash.com/photo-1516575150278-77136aed6920?auto=format&fit=crop&w=500&q=70',
+    title: '레드 컬러 포인트룩', subtitle: '화사한 컬러감이 포인트',
+    tpo: ['데일리'], season: ['봄', '가을'], mood: ['화사하게'],
+    items: [{ name: '레드 오렌지 톱', color: '#C1502E' }, { name: '데님 소재 아우터', color: '#7A93A6' }],
   },
   {
-    id: 'look-20', img: 'https://images.unsplash.com/photo-1618244972963-dbee1a7edc95?auto=format&fit=crop&w=500&q=70',
-    title: '액티브 요가룩', subtitle: '가볍게 몸을 움직이는 날',
+    id: 'look-13', img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=500&q=70',
+    title: '옐로우 트레이닝 세트업', subtitle: '가볍게 몸을 움직이는 날',
     tpo: ['운동'], season: ['봄', '여름'], mood: ['편안하게'],
-    items: [{ name: '크롭 스포츠 톱', color: '#3A4A52' }, { name: '레깅스', color: '#232323' }, { name: '트레이닝화', color: '#E5E1D8' }],
-  },
-  {
-    id: 'look-21', img: 'https://images.unsplash.com/photo-1544957992-20514f595d6f?auto=format&fit=crop&w=500&q=70',
-    title: '체크 셔츠 캐주얼', subtitle: '무심한 듯 멋스럽게',
-    tpo: ['데일리'], season: ['가을'], mood: ['시크하게'],
-    items: [{ name: '체크 셔츠', color: '#6E6259' }, { name: '블랙 진', color: '#232323' }, { name: '첼시 부츠', color: '#3B2A1E' }],
-  },
-  {
-    id: 'look-22', img: 'https://images.unsplash.com/photo-1479064555552-3ef4979f8908?auto=format&fit=crop&w=500&q=70',
-    title: '화이트 원피스 화사룩', subtitle: '여름 나들이에 딱',
-    tpo: ['모임·데이트'], season: ['여름'], mood: ['화사하게'],
-    items: [{ name: '화이트 원피스', color: '#F3F1EA' }, { name: '라탄 백', color: '#B08D57' }, { name: '스트랩 샌들', color: '#D8CBB5' }],
-  },
-  {
-    id: 'look-23', img: 'https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?auto=format&fit=crop&w=500&q=70',
-    title: '니트 조끼 오피스', subtitle: '단정하면서 포인트있게',
-    tpo: ['오피스'], season: ['가을', '겨울'], mood: ['자신감있게'],
-    items: [{ name: '니트 베스트', color: '#8A9A7E' }, { name: '슬랙스', color: '#37342E' }, { name: '로퍼', color: '#5B4636' }],
-  },
-  {
-    id: 'look-24', img: 'https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?auto=format&fit=crop&w=500&q=70',
-    title: '롱스커트 러블리룩', subtitle: '봄바람에 어울리는 룩',
-    tpo: ['모임·데이트'], season: ['봄'], mood: ['러블리하게'],
-    items: [{ name: '블라우스', color: '#F3F1EA' }, { name: '롱 플레어 스커트', color: '#E7B9C4' }, { name: '메리제인 슈즈', color: '#5B4636' }],
+    items: [{ name: '옐로우 후드', color: '#E8B23A' }, { name: '옐로우 조거팬츠', color: '#E8B23A' }, { name: '화이트 부츠', color: '#F3F1EA' }],
   },
 ];
 
 /* ---- 요즘 뜨는 아이템 (개별 아이템 스트립) ---- */
 const TRENDING_ITEMS = [
-  { id: 'item-01', img: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=300&q=70', name: '청키 스니커즈', badge: 'HOT', note: '발목이 슬림해 보이는 볼륨 실루엣이 대세예요' },
-  { id: 'item-02', img: 'https://images.unsplash.com/photo-1560343090-f0409e92791a?auto=format&fit=crop&w=300&q=70', name: '볼캡', badge: '인기 급상승', note: '캐주얼룩에 포인트를 더해주는 아이템이에요' },
-  { id: 'item-03', img: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=300&q=70', name: '레트로 선글라스', badge: 'NEW', note: '얼굴형 상관없이 무난하게 잘 어울려요' },
-  { id: 'item-04', img: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=300&q=70', name: '롱 가디건', badge: 'HOT', note: '가을·겨울 레이어드의 필수템으로 떠올랐어요' },
-  { id: 'item-05', img: 'https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&w=300&q=70', name: '와이드 데님', badge: '인기 급상승', note: '편안한 핏감으로 다시 인기를 얻고 있어요' },
-  { id: 'item-06', img: 'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=300&q=70', name: '첼시 부츠', badge: 'HOT', note: '어떤 하의와도 무난하게 어울려요' },
-  { id: 'item-07', img: 'https://images.unsplash.com/photo-1509941943102-10c232535736?auto=format&fit=crop&w=300&q=70', name: '레더 벨트백', badge: 'NEW', note: '허리에 매치하면 포인트 스타일링이 완성돼요' },
-  { id: 'item-08', img: 'https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=300&q=70', name: '와이드 팬츠', badge: '인기 급상승', note: '편안하면서 다리가 길어 보이는 실루엣이에요' },
-  { id: 'item-09', img: 'https://images.unsplash.com/photo-1521336575822-6da63fb45455?auto=format&fit=crop&w=300&q=70', name: '버킷햇', badge: 'HOT', note: '캐주얼룩 포인트로 다시 유행하고 있어요' },
-  { id: 'item-10', img: 'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&fit=crop&w=300&q=70', name: '레이어드 목걸이', badge: 'NEW', note: '심플한 룩에 포인트를 더해주는 쥬얼리예요' },
-  { id: 'item-11', img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=300&q=70', name: '미니 이어링', badge: '인기 급상승', note: '데일리로 가볍게 매치하기 좋아요' },
-  { id: 'item-12', img: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=300&q=70', name: '레더 벨트', badge: 'HOT', note: '허리 라인을 살려주는 코디 필수 아이템이에요' },
+  { id: 'item-01', img: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=300&q=70', name: '파스텔 스니커즈', badge: 'HOT', note: '파스텔 컬러 배색이 포인트인 스니커즈예요' },
+  { id: 'item-02', img: 'https://images.unsplash.com/photo-1560343090-f0409e92791a?auto=format&fit=crop&w=300&q=70', name: '스웨이드 더비슈즈', badge: 'NEW', note: '캐주얼룩에도 포멀룩에도 무난하게 어울려요' },
+  { id: 'item-03', img: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=300&q=70', name: '블랙 러닝화', badge: '인기 급상승', note: '가볍고 편안해서 데일리로도 좋아요' },
+  { id: 'item-04', img: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=300&q=70', name: '클래식 손목시계', badge: 'NEW', note: '포멀룩 완성도를 높여주는 아이템이에요' },
+  { id: 'item-05', img: 'https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&w=300&q=70', name: '컬러블록 청키스니커즈', badge: 'HOT', note: '볼륨감 있는 실루엣이 요즘 대세예요' },
+  { id: 'item-06', img: 'https://images.unsplash.com/photo-1509941943102-10c232535736?auto=format&fit=crop&w=300&q=70', name: '워치 & 브레이슬릿 스택', badge: '인기 급상승', note: '손목에 레이어드해서 포인트를 줘보세요' },
+  { id: 'item-07', img: 'https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=300&q=70', name: '그레이 팬츠 캐주얼 세트', badge: 'NEW', note: '스니커즈와 매치하면 편안한 데일리룩 완성' },
+  { id: 'item-08', img: 'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&fit=crop&w=300&q=70', name: '컬러 레인재킷', badge: 'HOT', note: '비 오는 날에도 스타일을 챙길 수 있어요' },
+  { id: 'item-09', img: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=300&q=70', name: '화이트 스웨트셔츠 세트', badge: 'NEW', note: '데님·스니커즈와 매치하기 좋은 기본템이에요' },
+  { id: 'item-10', img: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?auto=format&fit=crop&w=300&q=70', name: '프릴 니트 판초', badge: 'HOT', note: '가을에 가볍게 걸치기 좋은 아이템이에요' },
+  { id: 'item-11', img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=300&q=70', name: '브라운 봄버자켓', badge: '인기 급상승', note: '캐주얼룩에 포인트를 주는 아우터예요' },
+  { id: 'item-12', img: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=300&q=70', name: '플로럴 패턴 힐', badge: 'NEW', note: '포멀룩에 화사함을 더해주는 슈즈예요' },
 ];
 
-/* ---- 시즌 스페셜 (수영복 / 스키복 등) ---- */
+/* ---- 시즌 스페셜 (수영복 / 스키복 등) ----
+   실제 사진 대신 컬러 스와치로 아이템을 보여줘요. 사진-설명 불일치를 원천 차단하기 위한 선택이에요. */
 const SEASONAL_SPECIALS = [
   {
-    id: 'special-01', img: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=500&q=70',
-    badgeLabel: '☀️ 여름 스페셜', title: '체크 원피스 수영복', subtitle: '휴가 필수템',
+    id: 'special-01', icon: '👙', badgeLabel: '☀️ 여름 스페셜', title: '체크 원피스 수영복', subtitle: '휴가 필수템',
     tpo: ['운동'], season: ['여름'], mood: ['화사하게'],
     items: [{ name: '원피스 수영복', color: '#2E4A6B' }, { name: '밀짚모자', color: '#D8B27C' }, { name: '비치 샌들', color: '#E8DFCB' }],
   },
   {
-    id: 'special-02', img: 'https://images.unsplash.com/photo-1560243563-062bfc001d68?auto=format&fit=crop&w=500&q=70',
-    badgeLabel: '☀️ 여름 스페셜', title: '래쉬가드 세트', subtitle: '물놀이도 스타일있게',
+    id: 'special-02', icon: '🏊', badgeLabel: '☀️ 여름 스페셜', title: '래쉬가드 세트', subtitle: '물놀이도 스타일있게',
     tpo: ['운동'], season: ['여름'], mood: ['편안하게'],
     items: [{ name: '집업 래쉬가드', color: '#1F3A5F' }, { name: '래쉬가드 반바지', color: '#22242A' }, { name: '아쿠아 슈즈', color: '#3B3B3B' }],
   },
   {
-    id: 'special-03', img: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=500&q=70',
-    badgeLabel: '☀️ 여름 스페셜', title: '밀짚모자 & 비치 커버업', subtitle: '해변 산책 룩',
+    id: 'special-03', icon: '🏖️', badgeLabel: '☀️ 여름 스페셜', title: '밀짚모자 & 비치 커버업', subtitle: '해변 산책 룩',
     tpo: ['모임·데이트'], season: ['여름'], mood: ['화사하게', '러블리하게'],
     items: [{ name: '크로셰 커버업', color: '#F1E7D9' }, { name: '밀짚모자', color: '#D8B27C' }, { name: '라탄 백', color: '#B08D57' }],
   },
   {
-    id: 'special-04', img: 'https://images.unsplash.com/photo-1519750783826-e2420f4d687f?auto=format&fit=crop&w=500&q=70',
-    badgeLabel: '❄️ 겨울 스페셜', title: '스키 재킷 & 팬츠 세트', subtitle: '슬로프 위 코디',
+    id: 'special-04', icon: '⛷️', badgeLabel: '❄️ 겨울 스페셜', title: '스키 재킷 & 팬츠 세트', subtitle: '슬로프 위 코디',
     tpo: ['운동'], season: ['겨울'], mood: ['자신감있게'],
     items: [{ name: '스키 재킷', color: '#B23A2E' }, { name: '스키 팬츠', color: '#22242A' }, { name: '스키 고글', color: '#3B3B3B' }],
   },
   {
-    id: 'special-05', img: 'https://images.unsplash.com/photo-1614179689702-355944cd0918?auto=format&fit=crop&w=500&q=70',
-    badgeLabel: '❄️ 겨울 스페셜', title: '롱패딩 세트', subtitle: '한파에도 든든하게',
+    id: 'special-05', icon: '🧥', badgeLabel: '❄️ 겨울 스페셜', title: '롱패딩 세트', subtitle: '한파에도 든든하게',
     tpo: ['데일리'], season: ['겨울'], mood: ['편안하게'],
     items: [{ name: '롱패딩', color: '#22242A' }, { name: '니트 목도리', color: '#8C6F52' }, { name: '방한 부츠', color: '#3B2A1E' }],
   },
   {
-    id: 'special-06', img: 'https://images.unsplash.com/photo-1608889825205-eebdb9fc5806?auto=format&fit=crop&w=500&q=70',
-    badgeLabel: '❄️ 겨울 스페셜', title: '니트 비니 & 장갑 세트', subtitle: '포인트가 되는 방한템',
+    id: 'special-06', icon: '🧤', badgeLabel: '❄️ 겨울 스페셜', title: '니트 비니 & 장갑 세트', subtitle: '포인트가 되는 방한템',
     tpo: ['데일리'], season: ['겨울'], mood: ['편안하게'],
     items: [{ name: '니트 비니', color: '#5E4A36' }, { name: '울 장갑', color: '#8C6F52' }, { name: '니트 목도리', color: '#B7A996' }],
   },
@@ -357,7 +288,7 @@ function renderSeasonalStrip() {
     card.innerHTML = `
       <div class="seasonal-card-thumb">
         <span class="seasonal-card-badge">${item.badgeLabel}</span>
-        <img src="${item.img}" alt="${item.title}" loading="lazy">
+        <span class="seasonal-card-icon">${item.icon}</span>
       </div>
       <div class="seasonal-card-body">
         <h5>${item.title}</h5>
@@ -412,8 +343,12 @@ function openQuickView(look) {
     </div>
   `).join('');
 
+  const photoBlock = look.img
+    ? `<div class="qv-photo"><img src="${look.img}" alt="${look.title}"></div>`
+    : `<div class="qv-photo qv-photo-icon">${look.icon || '👗'}</div>`;
+
   quickviewBody.innerHTML = `
-    <div class="qv-photo"><img src="${look.img}" alt="${look.title}"></div>
+    ${photoBlock}
     <span class="qv-tag">${look.tpo[0]} · ${look.mood[0]}</span>
     <h3 class="qv-title">${look.title}</h3>
     <p class="qv-sub">${look.subtitle}</p>
