@@ -1758,6 +1758,191 @@ referenceEditForm.addEventListener('submit', async (e) => {
 });
 
 /* =========================================================
+   코디 구경 — 커뮤니티 공유 피드 (핀터레스트형)
+   ========================================================= */
+let communityOutfits = [];
+let myLikedOutfitIds = new Set();
+let activeCommunityFilter = '전체';
+let pendingCommunityBlob = null;
+
+const communityMasonry = document.getElementById('community-masonry');
+const communityEmpty = document.getElementById('community-empty');
+const communityFilterRow = document.getElementById('community-filter-row');
+const communityShareModal = document.getElementById('community-share-modal');
+const communityShareForm = document.getElementById('community-share-form');
+const communityFileInput = document.getElementById('community-file-input');
+const communityPhotoPreview = document.getElementById('community-photo-preview');
+
+document.getElementById('community-share-btn').addEventListener('click', () => { communityShareModal.hidden = false; });
+document.getElementById('community-share-close-btn').addEventListener('click', () => { communityShareModal.hidden = true; });
+communityShareModal.addEventListener('click', (e) => { if (e.target === communityShareModal) communityShareModal.hidden = true; });
+
+communityFilterRow.addEventListener('click', (e) => {
+  const btn = e.target.closest('.filter-chip');
+  if (!btn) return;
+  activeCommunityFilter = btn.dataset.cfilter;
+  communityFilterRow.querySelectorAll('.filter-chip').forEach(b => b.classList.toggle('is-active', b === btn));
+  renderCommunityFeed();
+});
+
+communityFileInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, 900 / Math.max(img.width, img.height));
+      const w = Math.round(img.width * scale);
+      const h = Math.round(img.height * scale);
+      const c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      c.getContext('2d').drawImage(img, 0, 0, w, h);
+      c.toBlob((blob) => {
+        pendingCommunityBlob = blob;
+        communityPhotoPreview.innerHTML = `<div class="tryon-preview"><img src="${c.toDataURL('image/jpeg', 0.85)}" alt="업로드한 코디"></div>`;
+      }, 'image/jpeg', 0.85);
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+
+communityShareForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!currentUserId) return;
+  if (!pendingCommunityBlob) { alert('코디 사진을 먼저 올려주세요.'); return; }
+
+  const submitBtn = communityShareForm.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  submitBtn.textContent = '공유 중...';
+  try {
+    const imagePath = `${currentUserId}/${uid()}.jpg`;
+    const { error: upErr } = await sb.storage.from('outfit-images').upload(imagePath, pendingCommunityBlob, { contentType: 'image/jpeg' });
+    if (upErr) throw upErr;
+
+    const { error } = await sb.from('shared_outfits').insert({
+      owner_id: currentUserId,
+      title: document.getElementById('community-title').value.trim(),
+      description: document.getElementById('community-desc').value.trim() || null,
+      season: communityShareForm.querySelector('input[name="community-season"]:checked').value,
+      tpo: communityShareForm.querySelector('input[name="community-tpo"]:checked').value,
+      mood: communityShareForm.querySelector('input[name="community-mood"]:checked').value,
+      image_path: imagePath,
+    });
+    if (error) throw error;
+
+    communityShareForm.reset();
+    pendingCommunityBlob = null;
+    communityPhotoPreview.innerHTML = '';
+    communityShareModal.hidden = true;
+    await loadCommunityOutfits();
+    renderCommunityFeed();
+  } catch (err) {
+    console.error(err);
+    alert('코디를 공유하지 못했어요: ' + err.message);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = '코디 공유하기';
+  }
+});
+
+async function loadCommunityOutfits() {
+  const { data, error } = await sb.from('shared_outfits').select('*').order('created_at', { ascending: false }).limit(100);
+  if (error) { console.error(error); communityOutfits = []; return; }
+
+  communityOutfits = data.map(row => {
+    const { data: pub } = sb.storage.from('outfit-images').getPublicUrl(row.image_path);
+    return {
+      id: row.id, title: row.title, description: row.description || '',
+      season: row.season, tpo: row.tpo, mood: row.mood,
+      img: pub ? pub.publicUrl : '', imagePath: row.image_path,
+      likeCount: row.like_count || 0, ownerId: row.owner_id,
+      createdAt: new Date(row.created_at).getTime(),
+    };
+  });
+
+  const { data: likes } = await sb.from('outfit_likes').select('outfit_id').eq('owner_id', currentUserId);
+  myLikedOutfitIds = new Set((likes || []).map(l => l.outfit_id));
+}
+
+function renderCommunityFeed() {
+  const list = activeCommunityFilter === '전체'
+    ? communityOutfits
+    : communityOutfits.filter(o => o.tpo === activeCommunityFilter);
+
+  communityMasonry.innerHTML = '';
+  communityEmpty.hidden = list.length > 0;
+  communityEmpty.textContent = communityOutfits.length === 0
+    ? '아직 공유된 코디가 없어요. 첫 코디를 올려보세요 💜'
+    : '이 조건에 맞는 코디가 아직 없어요.';
+
+  list.forEach(o => {
+    const liked = myLikedOutfitIds.has(o.id);
+    const isMine = o.ownerId === currentUserId;
+    const card = document.createElement('div');
+    card.className = 'trend-card community-card';
+    card.innerHTML = `
+      ${isMine ? `<div class="card-action-row"><button type="button" class="item-delete-btn" data-del="${o.id}" aria-label="삭제">✕</button></div>` : ''}
+      <img src="${o.img}" alt="${o.title}" loading="lazy">
+      <div class="trend-card-body">
+        <span class="trend-card-tag">${o.tpo}</span>
+        <h4>${o.title}</h4>
+        ${o.description ? `<p>${o.description}</p>` : ''}
+        <button type="button" class="like-btn ${liked ? 'is-liked' : ''}" data-like="${o.id}">
+          ${liked ? '❤️' : '🤍'} <span>${o.likeCount}</span>
+        </button>
+      </div>
+    `;
+    communityMasonry.appendChild(card);
+  });
+
+  communityMasonry.querySelectorAll('[data-like]').forEach(btn => {
+    btn.addEventListener('click', (e) => { e.stopPropagation(); toggleOutfitLike(btn.dataset.like); });
+  });
+  communityMasonry.querySelectorAll('[data-del]').forEach(btn => {
+    btn.addEventListener('click', (e) => { e.stopPropagation(); deleteSharedOutfit(btn.dataset.del); });
+  });
+}
+
+async function toggleOutfitLike(id) {
+  if (!currentUserId) return;
+  const liked = myLikedOutfitIds.has(id);
+  // 서버 응답을 기다리지 않고 먼저 화면에 반영해요 (실패하면 되돌려요).
+  const outfit = communityOutfits.find(o => o.id === id);
+  if (outfit) outfit.likeCount += liked ? -1 : 1;
+  if (liked) myLikedOutfitIds.delete(id); else myLikedOutfitIds.add(id);
+  renderCommunityFeed();
+
+  try {
+    if (liked) {
+      const { error } = await sb.from('outfit_likes').delete().eq('outfit_id', id).eq('owner_id', currentUserId);
+      if (error) throw error;
+    } else {
+      const { error } = await sb.from('outfit_likes').insert({ outfit_id: id, owner_id: currentUserId });
+      if (error) throw error;
+    }
+  } catch (err) {
+    console.error(err);
+    await loadCommunityOutfits();
+    renderCommunityFeed();
+  }
+}
+
+async function deleteSharedOutfit(id) {
+  const outfit = communityOutfits.find(o => o.id === id);
+  try {
+    if (outfit && outfit.imagePath) await sb.storage.from('outfit-images').remove([outfit.imagePath]);
+    await sb.from('shared_outfits').delete().eq('id', id);
+    await loadCommunityOutfits();
+    renderCommunityFeed();
+  } catch (err) {
+    console.error(err);
+    alert('삭제하지 못했어요: ' + err.message);
+  }
+}
+
+/* =========================================================
    퍼스널 컬러 자가진단 (LOOKCODI에서 통합)
    ========================================================= */
 const PERSONAL_COLOR_TYPES = {
@@ -2042,10 +2227,11 @@ async function loadAppData() {
   referenceEmpty.textContent = '불러오는 중...';
   referenceEmpty.hidden = false;
 
-  await Promise.all([loadClosetItems(), loadMarketItems(), loadProfile(), loadReferences()]);
+  await Promise.all([loadClosetItems(), loadMarketItems(), loadProfile(), loadReferences(), loadCommunityOutfits()]);
   renderClosetGallery();
   renderMarketGrid();
   renderReferenceGrid();
+  renderCommunityFeed();
 }
 
 async function init() {

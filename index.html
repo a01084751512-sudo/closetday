@@ -70,6 +70,7 @@
       <button type="button" class="top-nav-link" data-view="styling">맞춤 코디</button>
       <button type="button" class="top-nav-link" data-view="closet">내 옷장</button>
       <button type="button" class="top-nav-link" data-view="market">동네 옷장</button>
+      <button type="button" class="top-nav-link" data-view="community">코디 구경</button>
       <button type="button" class="top-nav-link" data-view="reference">레퍼런스</button>
       <button type="button" class="top-nav-link" data-view="mypage">마이페이지</button>
     </nav>
@@ -511,6 +512,29 @@
     </div>
   </section>
 
+  <!-- ===================== COMMUNITY (pinterest-style outfit feed) ===================== -->
+  <section id="view-community" class="view">
+    <div class="section-head-row">
+      <h2>코디 구경</h2>
+      <p class="section-desc">다른 사람들의 오늘 코디를 구경하고, 내 코디도 공유해보세요. 마음에 드는 코디엔 하트를 눌러주세요.</p>
+    </div>
+
+    <div class="community-toolbar">
+      <div class="chip-row" id="community-filter-row">
+        <button type="button" class="filter-chip is-active" data-cfilter="전체">전체</button>
+        <button type="button" class="filter-chip" data-cfilter="데일리">데일리</button>
+        <button type="button" class="filter-chip" data-cfilter="오피스">오피스</button>
+        <button type="button" class="filter-chip" data-cfilter="모임·데이트">데이트</button>
+        <button type="button" class="filter-chip" data-cfilter="운동">액티브</button>
+        <button type="button" class="filter-chip" data-cfilter="포멀">포멀</button>
+      </div>
+      <button type="button" id="community-share-btn" class="btn btn-primary btn-small">＋ 내 코디 공유하기</button>
+    </div>
+
+    <div id="community-masonry" class="trend-masonry"></div>
+    <p id="community-empty" class="empty-msg">아직 공유된 코디가 없어요. 첫 코디를 올려보세요 💜</p>
+  </section>
+
   <!-- ===================== REFERENCE (style community) ===================== -->
   <section id="view-reference" class="view">
     <div class="section-head-row">
@@ -689,6 +713,7 @@
   <button type="button" class="bottom-tab" data-view="styling"><span>✨</span>맞춤코디</button>
   <button type="button" class="bottom-tab" data-view="closet"><span>👕</span>내옷장</button>
   <button type="button" class="bottom-tab" data-view="market"><span>📍</span>동네옷장</button>
+  <button type="button" class="bottom-tab" data-view="community"><span>💜</span>구경</button>
   <button type="button" class="bottom-tab" data-view="reference"><span>🎬</span>레퍼런스</button>
   <button type="button" class="bottom-tab" data-view="mypage"><span>🙂</span>마이</button>
 </nav>
@@ -766,6 +791,64 @@
         </div>
       </fieldset>
       <button type="submit" class="btn btn-primary btn-block">수정 내용 저장하기</button>
+    </form>
+  </div>
+</div>
+
+<!-- 코디 공유 모달 -->
+<div id="community-share-modal" class="modal-overlay" hidden>
+  <div class="modal-box">
+    <button type="button" class="modal-close" id="community-share-close-btn" aria-label="닫기">✕</button>
+    <h3 class="qv-title">내 코디 공유하기</h3>
+    <p class="qv-sub">오늘 입은 코디 사진을 올려서 다른 사람들과 나눠보세요.</p>
+    <form id="community-share-form" class="meta-form" style="box-shadow:none; padding:0;">
+      <label for="community-file-input" class="upload-dropzone">
+        <span class="upload-icon">＋</span>
+        <span class="upload-text">코디 사진 올리기</span>
+        <span class="upload-subtext">전신 사진이면 더 좋아요</span>
+      </label>
+      <input type="file" id="community-file-input" accept="image/*" hidden>
+      <div id="community-photo-preview"></div>
+
+      <label class="field-label" for="community-title">제목</label>
+      <input type="text" id="community-title" required maxlength="40" placeholder="예: 비 오는 날 출근룩">
+
+      <label class="field-label" for="community-desc">설명 <span class="optional-tag">(선택)</span></label>
+      <textarea id="community-desc" rows="2" placeholder="어떤 아이템을 매치했는지 알려주세요"></textarea>
+
+      <fieldset class="chip-group">
+        <legend>상황</legend>
+        <div class="chip-row">
+          <input type="radio" name="community-tpo" id="c-tpo-daily" value="데일리" checked><label for="c-tpo-daily" class="chip">데일리</label>
+          <input type="radio" name="community-tpo" id="c-tpo-office" value="오피스"><label for="c-tpo-office" class="chip">오피스</label>
+          <input type="radio" name="community-tpo" id="c-tpo-date" value="모임·데이트"><label for="c-tpo-date" class="chip">모임·데이트</label>
+          <input type="radio" name="community-tpo" id="c-tpo-active" value="운동"><label for="c-tpo-active" class="chip">운동</label>
+          <input type="radio" name="community-tpo" id="c-tpo-formal" value="포멀"><label for="c-tpo-formal" class="chip">포멀</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="chip-group">
+        <legend>계절</legend>
+        <div class="chip-row">
+          <input type="radio" name="community-season" id="c-season-spring" value="봄" checked><label for="c-season-spring" class="chip">봄</label>
+          <input type="radio" name="community-season" id="c-season-summer" value="여름"><label for="c-season-summer" class="chip">여름</label>
+          <input type="radio" name="community-season" id="c-season-fall" value="가을"><label for="c-season-fall" class="chip">가을</label>
+          <input type="radio" name="community-season" id="c-season-winter" value="겨울"><label for="c-season-winter" class="chip">겨울</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="chip-group">
+        <legend>무드</legend>
+        <div class="chip-row">
+          <input type="radio" name="community-mood" id="c-mood-comfy" value="편안하게" checked><label for="c-mood-comfy" class="chip">편안하게</label>
+          <input type="radio" name="community-mood" id="c-mood-confident" value="자신감있게"><label for="c-mood-confident" class="chip">자신감있게</label>
+          <input type="radio" name="community-mood" id="c-mood-lovely" value="러블리하게"><label for="c-mood-lovely" class="chip">러블리하게</label>
+          <input type="radio" name="community-mood" id="c-mood-chic" value="시크하게"><label for="c-mood-chic" class="chip">시크하게</label>
+          <input type="radio" name="community-mood" id="c-mood-bright" value="화사하게"><label for="c-mood-bright" class="chip">화사하게</label>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="btn btn-primary btn-block">코디 공유하기</button>
     </form>
   </div>
 </div>

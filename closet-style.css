@@ -388,6 +388,20 @@ button { font-family: var(--font-sans); }
 .trend-card h4 { font-size: 0.9rem; font-weight: 700; margin: 0 0 3px; line-height: 1.35; letter-spacing: -0.01em; }
 .trend-card p { font-size: 0.77rem; color: var(--color-text-soft); margin: 0; }
 
+/* ===== Community outfit feed ===== */
+.community-toolbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  flex-wrap: wrap; margin-bottom: 18px;
+}
+.community-card { position: relative; }
+.like-btn {
+  margin-top: 8px; background: none; border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill); padding: 5px 12px; font-size: 0.76rem; font-weight: 700;
+  color: var(--color-text-soft); cursor: pointer; transition: all 0.15s ease;
+}
+.like-btn:hover { border-color: var(--color-accent); background: var(--color-accent-soft); }
+.like-btn.is-liked { border-color: #E5A0A8; background: #FCEFF0; color: #B2455A; }
+
 /* ===== Styling wizard (core feature) ===== */
 .styling-head { margin: 24px 0 20px; }
 .styling-head h2 { font-size: 1.45rem; }
