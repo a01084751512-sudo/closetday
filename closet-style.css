@@ -101,6 +101,49 @@ button { font-family: var(--font-sans); }
 }
 .connection-status[hidden] { display: none; }
 
+.session-timer { font-size: 0.76rem; color: var(--color-text-soft); white-space: nowrap; }
+
+/* ===== Auth gate ===== */
+.auth-gate {
+  position: fixed; inset: 0; z-index: 500;
+  background: var(--color-bg);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.auth-gate[hidden] { display: none; }
+.auth-gate-box {
+  width: 100%; max-width: 380px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card-hover);
+  padding: 32px 28px;
+}
+.auth-gate-brand { text-align: center; font-size: 1.3rem; margin: 0 0 22px; }
+.auth-tabs { display: flex; border: 1px solid var(--color-line); border-radius: var(--radius-pill); padding: 3px; margin-bottom: 20px; }
+.auth-tab {
+  flex: 1; border: none; background: none; padding: 9px 0; border-radius: var(--radius-pill);
+  font-size: 0.88rem; font-weight: 700; color: var(--color-text-soft); cursor: pointer; transition: all 0.15s ease;
+}
+.auth-tab.is-active { background: var(--color-text); color: #fff; }
+.auth-form { display: flex; flex-direction: column; gap: 12px; }
+.auth-form[hidden] { display: none; }
+.auth-form .field-label { font-weight: 700; font-size: 0.86rem; margin-bottom: -6px; }
+.auth-form input {
+  width: 100%; padding: 11px 14px; border: 1px solid var(--color-line); border-radius: var(--radius-sm);
+  font-family: var(--font-sans); font-size: 0.92rem; background: var(--color-bg);
+}
+.auth-form .btn { margin-top: 6px; }
+.auth-message { margin: 16px 0 0; font-size: 0.84rem; text-align: center; color: var(--color-danger); }
+.auth-message.is-success { color: var(--color-accent-dark); }
+.auth-message[hidden] { display: none; }
+.auth-session-note { margin: 18px 0 0; font-size: 0.74rem; color: var(--color-text-faint); text-align: center; }
+.auth-upgrade-note {
+  font-size: 0.8rem; color: var(--color-accent-dark); background: var(--color-accent-soft);
+  border-radius: var(--radius-sm); padding: 11px 13px; margin-bottom: 18px;
+}
+.auth-upgrade-note[hidden] { display: none; }
+
 /* ===== View switching ===== */
 .app-main { max-width: var(--max-width); margin: 0 auto; padding: 4px 20px 90px; }
 .view { display: none; }

@@ -289,16 +289,194 @@ function showFatalStatus(message) {
   connectionStatus.hidden = false;
 }
 
-async function ensureSession() {
-  const { data: { session } } = await sb.auth.getSession();
-  if (session) { currentUserId = session.user.id; return; }
-  const { data, error } = await sb.auth.signInAnonymously();
-  if (error) {
-    console.error(error);
-    showFatalStatus('Supabase 로그인에 실패했어요. Authentication → Sign In / Providers에서 "Anonymous Sign-ins"가 켜져 있는지 확인해주세요.');
-    throw error;
+/* =========================================================
+   Auth — 이메일 로그인, 1시간 세션 후 자동 로그아웃
+   ========================================================= */
+const SESSION_DURATION_MS = 60 * 60 * 1000; // 1시간
+const LOGIN_AT_KEY = 'closetday-login-at';
+
+let autoLogoutTimer = null;
+let sessionTimerInterval = null;
+
+const authGate = document.getElementById('auth-gate');
+const authLoginForm = document.getElementById('auth-login-form');
+const authSignupForm = document.getElementById('auth-signup-form');
+const authMessage = document.getElementById('auth-message');
+const authUpgradeNote = document.getElementById('auth-upgrade-note');
+const logoutBtn = document.getElementById('logout-btn');
+const sessionTimerEl = document.getElementById('session-timer');
+
+function getLoginTimestamp() {
+  const v = localStorage.getItem(LOGIN_AT_KEY);
+  return v ? Number(v) : null;
+}
+function setLoginTimestamp() {
+  localStorage.setItem(LOGIN_AT_KEY, String(Date.now()));
+}
+function clearLoginTimestamp() {
+  localStorage.removeItem(LOGIN_AT_KEY);
+}
+
+function showAuthMessage(text, isSuccess) {
+  authMessage.textContent = text;
+  authMessage.hidden = false;
+  authMessage.classList.toggle('is-success', !!isSuccess);
+}
+
+document.querySelectorAll('.auth-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.auth-tab').forEach(t => t.classList.toggle('is-active', t === tab));
+    authLoginForm.hidden = tab.dataset.authTab !== 'login';
+    authSignupForm.hidden = tab.dataset.authTab !== 'signup';
+    authMessage.hidden = true;
+  });
+});
+
+function showAuthGate() {
+  authGate.hidden = false;
+  logoutBtn.hidden = true;
+  sessionTimerEl.hidden = true;
+}
+function hideAuthGate() {
+  authGate.hidden = true;
+  logoutBtn.hidden = false;
+  sessionTimerEl.hidden = false;
+}
+
+function updateSessionTimerDisplay() {
+  const loginAt = getLoginTimestamp();
+  if (!loginAt) { sessionTimerEl.textContent = ''; return; }
+  const remainingMs = loginAt + SESSION_DURATION_MS - Date.now();
+  if (remainingMs <= 0) { sessionTimerEl.textContent = ''; return; }
+  const mins = Math.floor(remainingMs / 60000);
+  const secs = Math.floor((remainingMs % 60000) / 1000);
+  sessionTimerEl.textContent = `⏱ ${mins}:${String(secs).padStart(2, '0')}`;
+}
+
+function scheduleAutoLogout() {
+  if (autoLogoutTimer) clearTimeout(autoLogoutTimer);
+  if (sessionTimerInterval) clearInterval(sessionTimerInterval);
+
+  const loginAt = getLoginTimestamp();
+  if (!loginAt) return;
+  const remaining = loginAt + SESSION_DURATION_MS - Date.now();
+  if (remaining <= 0) {
+    forceLogout('1시간이 지나 자동으로 로그아웃됐어요. 다시 로그인해주세요.');
+    return;
   }
-  currentUserId = data.user.id;
+  autoLogoutTimer = setTimeout(() => forceLogout('1시간이 지나 자동으로 로그아웃됐어요. 다시 로그인해주세요.'), remaining);
+  updateSessionTimerDisplay();
+  sessionTimerInterval = setInterval(updateSessionTimerDisplay, 1000);
+}
+
+async function forceLogout(message) {
+  clearLoginTimestamp();
+  if (autoLogoutTimer) { clearTimeout(autoLogoutTimer); autoLogoutTimer = null; }
+  if (sessionTimerInterval) { clearInterval(sessionTimerInterval); sessionTimerInterval = null; }
+  try { await sb.auth.signOut(); } catch (e) { /* ignore */ }
+  currentUserId = null;
+  showAuthGate();
+  authMessage.hidden = true;
+  document.querySelector('.auth-tab[data-auth-tab="login"]').click();
+  if (message) showAuthMessage(message, false);
+}
+
+logoutBtn.addEventListener('click', () => forceLogout(null));
+
+async function onAuthSuccess(userId) {
+  currentUserId = userId;
+  setLoginTimestamp();
+  scheduleAutoLogout();
+  hideAuthGate();
+  await loadAppData();
+}
+
+authLoginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const submitBtn = authLoginForm.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  submitBtn.textContent = '로그인 중...';
+  authMessage.hidden = true;
+  try {
+    const email = document.getElementById('auth-login-email').value.trim();
+    const password = document.getElementById('auth-login-password').value;
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+    await onAuthSuccess(data.user.id);
+  } catch (err) {
+    console.error(err);
+    showAuthMessage(err.message === 'Invalid login credentials' ? '이메일 또는 비밀번호가 올바르지 않아요.' : ('로그인에 실패했어요: ' + err.message), false);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = '로그인';
+  }
+});
+
+authSignupForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const submitBtn = authSignupForm.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  submitBtn.textContent = '가입 중...';
+  authMessage.hidden = true;
+  try {
+    const email = document.getElementById('auth-signup-email').value.trim();
+    const password = document.getElementById('auth-signup-password').value;
+
+    // 이 브라우저에 이미 익명 세션(기존 테스트 데이터)이 있으면, 새로 가입하지 않고
+    // 같은 uid를 유지한 채 이메일/비밀번호를 연결해서(업그레이드) 데이터를 그대로 이어가요.
+    const { data: { session: existingSession } } = await sb.auth.getSession();
+    if (existingSession && existingSession.user.is_anonymous) {
+      const { data, error } = await sb.auth.updateUser({ email, password });
+      if (error) throw error;
+      // 프로젝트에 이메일 확인이 켜져 있으면 별도로 확인 메일이 발송돼요.
+      // 지금 세션은 이미 로그인된 상태라 바로 앱을 계속 쓸 수 있어요.
+      await onAuthSuccess(data.user.id);
+      return;
+    }
+
+    const { data, error } = await sb.auth.signUp({ email, password });
+    if (error) throw error;
+    if (!data.session) {
+      showAuthMessage('가입 확인 이메일을 보냈어요. 이메일함에서 링크를 눌러 인증을 완료한 뒤 로그인해주세요.', true);
+      document.querySelector('.auth-tab[data-auth-tab="login"]').click();
+      return;
+    }
+    await onAuthSuccess(data.user.id);
+  } catch (err) {
+    console.error(err);
+    showAuthMessage('회원가입에 실패했어요: ' + err.message, false);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = '회원가입';
+  }
+});
+
+async function initAuth() {
+  const { data: { session } } = await sb.auth.getSession();
+  const loginAt = getLoginTimestamp();
+  const withinWindow = loginAt && (Date.now() - loginAt) < SESSION_DURATION_MS;
+
+  if (session && !session.user.is_anonymous && withinWindow) {
+    currentUserId = session.user.id;
+    scheduleAutoLogout();
+    hideAuthGate();
+    return true;
+  }
+
+  // 세션이 있는데 시간이 지났으면 정리
+  if (session && !session.user.is_anonymous && !withinWindow) {
+    await sb.auth.signOut();
+    clearLoginTimestamp();
+  }
+
+  // 익명 세션(예전 테스트 데이터)이 남아있으면 회원가입 시 이어받을 수 있다고 안내
+  if (session && session.user.is_anonymous) {
+    authUpgradeNote.hidden = false;
+    document.querySelector('.auth-tab[data-auth-tab="signup"]').click();
+  }
+
+  showAuthGate();
+  return false;
 }
 
 /* =========================================================
@@ -1470,13 +1648,7 @@ async function runTryOnGeneration(outfitText) {
 /* =========================================================
    init
    ========================================================= */
-async function init() {
-  renderTrend2026Grid();
-  renderTrendMasonry();
-  renderTrendingStrip();
-  renderSeasonalStrip();
-  renderPaletteStrip();
-
+async function loadAppData() {
   closetEmpty.textContent = '불러오는 중...';
   closetEmpty.hidden = false;
   marketEmpty.textContent = '불러오는 중...';
@@ -1484,16 +1656,25 @@ async function init() {
   referenceEmpty.textContent = '불러오는 중...';
   referenceEmpty.hidden = false;
 
-  try {
-    await ensureSession();
-  } catch (e) {
-    return;
-  }
-
   await Promise.all([loadClosetItems(), loadMarketItems(), loadProfile(), loadReferences()]);
   renderClosetGallery();
   renderMarketGrid();
   renderReferenceGrid();
+}
+
+async function init() {
+  // 로그인 여부와 상관없이 홈 피드(트렌드/아이템/컬러)는 바로 보여줘요.
+  // 실제로는 로그인 게이트가 화면을 덮고 있어서, 로그인 전엔 보이지 않아요.
+  renderTrend2026Grid();
+  renderTrendMasonry();
+  renderTrendingStrip();
+  renderSeasonalStrip();
+  renderPaletteStrip();
+
+  const loggedIn = await initAuth();
+  if (loggedIn) {
+    await loadAppData();
+  }
 }
 
 init();

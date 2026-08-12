@@ -11,6 +11,41 @@
 </head>
 <body>
 
+<!-- ===================== 로그인 게이트 ===================== -->
+<div id="auth-gate" class="auth-gate">
+  <div class="auth-gate-box">
+    <p class="brand auth-gate-brand">CLOSET<span class="brand-accent">DAY</span></p>
+
+    <div class="auth-tabs">
+      <button type="button" class="auth-tab is-active" data-auth-tab="login">로그인</button>
+      <button type="button" class="auth-tab" data-auth-tab="signup">회원가입</button>
+    </div>
+
+    <div id="auth-upgrade-note" class="auth-upgrade-note" hidden>
+      이 브라우저에 등록해두신 옷장·프로필 데이터가 있어요. 회원가입하면 그 데이터를 그대로 이어서 쓸 수 있어요.
+    </div>
+
+    <form id="auth-login-form" class="auth-form">
+      <label class="field-label" for="auth-login-email">이메일</label>
+      <input type="email" id="auth-login-email" required autocomplete="email" placeholder="you@example.com">
+      <label class="field-label" for="auth-login-password">비밀번호</label>
+      <input type="password" id="auth-login-password" required autocomplete="current-password" placeholder="비밀번호">
+      <button type="submit" class="btn btn-primary btn-block">로그인</button>
+    </form>
+
+    <form id="auth-signup-form" class="auth-form" hidden>
+      <label class="field-label" for="auth-signup-email">이메일</label>
+      <input type="email" id="auth-signup-email" required autocomplete="email" placeholder="you@example.com">
+      <label class="field-label" for="auth-signup-password">비밀번호</label>
+      <input type="password" id="auth-signup-password" required autocomplete="new-password" placeholder="6자 이상" minlength="6">
+      <button type="submit" class="btn btn-primary btn-block">회원가입</button>
+    </form>
+
+    <p id="auth-message" class="auth-message" hidden></p>
+    <p class="auth-session-note">로그인 후 1시간 동안 이용할 수 있어요. 시간이 지나면 자동으로 로그아웃돼요.</p>
+  </div>
+</div>
+
 <header class="app-header">
   <div class="app-header-inner">
     <a href="#" class="brand" data-nav="home">CLOSET<span class="brand-accent">DAY</span></a>
@@ -22,6 +57,8 @@
       <button type="button" class="top-nav-link" data-view="reference">레퍼런스</button>
       <button type="button" class="top-nav-link" data-view="mypage">마이페이지</button>
     </nav>
+    <span id="session-timer" class="session-timer" hidden></span>
+    <button type="button" id="logout-btn" class="icon-btn" aria-label="로그아웃" hidden>🚪</button>
     <button type="button" id="about-open-btn" class="icon-btn" aria-label="서비스 소개">ⓘ</button>
   </div>
 </header>
@@ -669,7 +706,7 @@
       <div class="guideline-card"><span class="guideline-icon">🌱</span><h4>선한 의도를 먼저 믿기</h4><p>조금 더 너그러운 마음으로 대화해주세요.</p></div>
     </div>
 
-    <p class="about-footnote">이 페이지는 Supabase에 연결된 프로토타입이에요. 내 옷장은 비공개(익명 로그인 기준), 동네 옷장은 공개 게시판이에요. 배경 제거는 간이 알고리즘이라 실제 제품에서는 전용 API 연동을 권장해요.</p>
+    <p class="about-footnote">이 페이지는 Supabase에 연결된 프로토타입이에요. 이메일로 로그인하면 1시간 동안 이용할 수 있고, 시간이 지나면 자동 로그아웃돼요. 내 옷장은 로그인한 본인에게만 보이고, 동네 옷장은 공개 게시판이에요. 배경 제거는 간이 알고리즘이라 실제 제품에서는 전용 API 연동을 권장해요.</p>
   </div>
 </div>
 
