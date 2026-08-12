@@ -15,6 +15,109 @@ function buildShopLink(keyword) {
   const site = SHOP_SITES[0];
   return site.urlTemplate.replace('{q}', encodeURIComponent(keyword));
 }
+function buildShopLinks(keyword) {
+  const encoded = encodeURIComponent(keyword);
+  return SHOP_SITES.map((site) => ({ name: site.name, url: site.urlTemplate.replace('{q}', encoded) }));
+}
+
+/* ---- 2026 트렌드 코디 (LOOKCODI에서 통합) — 보그 코리아·무신사·WhoWhatWear 등 트렌드 리포트를 참고해 구성 ---- */
+const CATEGORY_LABEL_KO = { top: '상의', bottom: '하의', outer: '아우터', dress: '원피스', shoes: '신발', acc: '액세서리' };
+const TREND_2026 = [
+  {
+    id: 't-stripe-01', styleTag: '믹스 스트라이프', title: '믹스 스트라이프 캐주얼룩',
+    trendNote: '2026 S/S 런웨이에서 두드러진, 굵기를 믹스한 스트라이프 무드',
+    description: '서로 다른 굵기의 스트라이프를 매치해 리듬감을 살린 2026년 트렌드 코디예요.',
+    items: [
+      { category: 'top', name: '믹스 스트라이프 셔츠', color: '#2C3E50' },
+      { category: 'bottom', name: '와이드 데님', color: '#4A6B8A' },
+      { category: 'shoes', name: '화이트 스니커즈', color: '#FFFFFF' },
+      { category: 'acc', name: '청키 비즈 목걸이', color: '#E8B4BC' },
+    ],
+    keyword: '여성 스트라이프 셔츠 와이드데님 2026 트렌드룩',
+  },
+  {
+    id: 't-balloon-01', styleTag: '벌룬 팬츠', title: '벌룬 팬츠 캐주얼룩',
+    trendNote: '2026년 런웨이와 리얼웨이를 동시에 장악한 벌룬 팬츠 실루엣',
+    description: '바람을 머금은 듯 부푼 실루엣의 벌룬 팬츠로 완성한 화제의 트렌드 코디예요.',
+    items: [
+      { category: 'top', name: '크롭 니트', color: '#EFE9DF' },
+      { category: 'bottom', name: '벌룬 팬츠', color: '#C9A77C' },
+      { category: 'shoes', name: '청키 스니커즈', color: '#FFFFFF' },
+    ],
+    keyword: '벌룬팬츠 캐주얼룩 2026 트렌드',
+  },
+  {
+    id: 't-pink-01', styleTag: '소프트 핑크', title: '파스텔 핑크 무드룩',
+    trendNote: '2026 S/S 컬러 트렌드 1위로 꼽힌 소프트 핑크',
+    description: '은은한 파스텔 핑크 톤으로 포인트를 준 2026년 컬러 트렌드 코디예요.',
+    items: [
+      { category: 'top', name: '파스텔 핑크 니트', color: '#E8B4BC' },
+      { category: 'bottom', name: '화이트 와이드 팬츠', color: '#F4EFE6' },
+      { category: 'shoes', name: '화이트 스니커즈', color: '#FFFFFF' },
+      { category: 'acc', name: '골드 이어링', color: '#C9A227' },
+    ],
+    keyword: '여성 파스텔 핑크 니트 화이트팬츠 2026 트렌드룩',
+  },
+  {
+    id: 't-denim-01', styleTag: '디스트로이드 데님', title: '디스트로이드 데님 캐주얼룩',
+    trendNote: '70년대 무드를 재해석한 2026년 디스트로이드 데님 트렌드',
+    description: '빈티지한 디스트로이드 데님으로 완성한 70년대 무드의 캐주얼룩이에요.',
+    items: [
+      { category: 'top', name: '화이트 반팔티', color: '#FFFFFF' },
+      { category: 'bottom', name: '디스트로이드 데님', color: '#5C7A9A' },
+      { category: 'shoes', name: '캔버스 스니커즈', color: '#EFE9DF' },
+    ],
+    keyword: '남성 디스트로이드 데님 반팔티 2026 트렌드룩',
+  },
+  {
+    id: 't-eggplant-01', styleTag: '가지색 무드', title: '가지색 블레이저 오피스룩',
+    trendNote: "2026 가을 대표 컬러로 꼽힌 '가지색(에그플랜트)'을 활용한 오피스룩",
+    description: '짙은 가지색 블레이저로 가을 시즌 컬러 트렌드를 담은 오피스룩이에요.',
+    items: [
+      { category: 'outer', name: '가지색 블레이저', color: '#4B2A45' },
+      { category: 'top', name: '화이트 셔츠', color: '#FFFFFF' },
+      { category: 'bottom', name: '슬림 슬랙스', color: '#1B1B1B' },
+      { category: 'shoes', name: '로퍼', color: '#3A2A1E' },
+    ],
+    keyword: '여성 가지색 블레이저 오피스룩 2026 트렌드',
+  },
+  {
+    id: 't-shoulder-01', styleTag: '80s 숄더라인', title: '숄더패드 블레이저룩',
+    trendNote: '잘록한 허리와 과감해진 숄더라인이 돋아나는 2026 가을 1980년대 무드 트렌드',
+    description: '강조된 숄더라인의 블레이저로 80년대 무드를 재해석한 트렌드 코디예요.',
+    items: [
+      { category: 'outer', name: '숄더패드 블레이저', color: '#2C3E50' },
+      { category: 'top', name: '터틀넥', color: '#1B1B1B' },
+      { category: 'bottom', name: '슬림 슬랙스', color: '#1B1B1B' },
+      { category: 'shoes', name: '첼시 부츠', color: '#3A2A1E' },
+    ],
+    keyword: '숄더패드 블레이저 80년대 무드 2026 트렌드룩',
+  },
+  {
+    id: 't-texture-01', styleTag: '텍스처 레이어드', title: '벨벳 레더 레이어드룩',
+    trendNote: '벨벳과 레더를 매치하는 2026 가을 텍스처 레이어링 트렌드',
+    description: '벨벳과 레더 소재를 함께 매치해 깊이감을 더한 가을 트렌드 코디예요.',
+    items: [
+      { category: 'top', name: '벨벳 톱', color: '#5C2A3A' },
+      { category: 'bottom', name: '레더 스커트', color: '#1B1B1B' },
+      { category: 'shoes', name: '앵클 부츠', color: '#2B1B12' },
+      { category: 'acc', name: '스테이트먼트 이어링', color: '#C9A227' },
+    ],
+    keyword: '여성 벨벳 레더 스커트 2026 가을 트렌드룩',
+  },
+  {
+    id: 't-allblack-01', styleTag: '올블랙 파워룩', title: '올블랙 파워 슈트룩',
+    trendNote: '밀라노 런웨이를 장악한 2026 가을 올블랙 파워룩 트렌드',
+    description: '강렬한 무채색 올블랙 셋업으로 완성한 파워풀한 트렌드 코디예요.',
+    items: [
+      { category: 'outer', name: '블랙 슈트 재킷', color: '#1B1B1B' },
+      { category: 'top', name: '블랙 셔츠', color: '#1B1B1B' },
+      { category: 'bottom', name: '블랙 슬랙스', color: '#1B1B1B' },
+      { category: 'shoes', name: '블랙 더비 슈즈', color: '#1B1B1B' },
+    ],
+    keyword: '올블랙 슈트 파워룩 2026 트렌드',
+  },
+];
 
 // 아래 이미지들은 모두 다운로드해서 실제 내용을 직접 확인한 뒤,
 // 사진에 실제로 보이는 것과 제목·아이템 구성이 일치하도록 작성했어요.
@@ -251,6 +354,41 @@ function renderTrendMasonry() {
     `;
     card.addEventListener('click', () => openQuickView(look));
     trendMasonry.appendChild(card);
+  });
+}
+
+/* ---- 2026 트렌드 코디 (LOOKCODI에서 통합) ---- */
+const trend2026Grid = document.getElementById('trend2026-grid');
+function renderTrend2026Grid() {
+  trend2026Grid.innerHTML = '';
+  TREND_2026.forEach(outfit => {
+    const itemRows = outfit.items.map(item => `
+      <div class="outfit-item-row">
+        <div class="outfit-item-thumb"><span class="swatch-dot" style="background:${item.color}"></span></div>
+        <div class="outfit-item-info">
+          <p class="outfit-item-cat">${CATEGORY_LABEL_KO[item.category] || '아이템'}</p>
+          <p class="outfit-item-desc">${item.name}</p>
+        </div>
+      </div>
+    `).join('');
+    const shopLinks = buildShopLinks(outfit.keyword)
+      .map(l => `<a href="${l.url}" target="_blank" rel="noopener" class="trend2026-shop-link">${l.name}</a>`)
+      .join('');
+
+    const card = document.createElement('article');
+    card.className = 'outfit-card trend2026-card';
+    card.innerHTML = `
+      <div class="outfit-card-head">
+        <h3>${outfit.title}</h3>
+        <span class="outfit-source-badge is-trend">🔥 2026 트렌드</span>
+      </div>
+      <div class="outfit-meta-tags"><span>${outfit.styleTag}</span></div>
+      <p class="trend2026-note">${outfit.trendNote}</p>
+      <p class="outfit-fallback-note" style="background:none; padding:0;">${outfit.description}</p>
+      ${itemRows}
+      <div class="trend2026-shop-row">${shopLinks}</div>
+    `;
+    trend2026Grid.appendChild(card);
   });
 }
 
@@ -1333,6 +1471,7 @@ async function runTryOnGeneration(outfitText) {
    init
    ========================================================= */
 async function init() {
+  renderTrend2026Grid();
   renderTrendMasonry();
   renderTrendingStrip();
   renderSeasonalStrip();
