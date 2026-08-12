@@ -323,13 +323,81 @@ function showAuthMessage(text, isSuccess) {
   authMessage.classList.toggle('is-success', !!isSuccess);
 }
 
+const authTabsRow = document.querySelector('.auth-tabs');
+const authForgotRow = document.querySelector('.auth-forgot-row');
+const authForgotBtn = document.getElementById('auth-forgot-btn');
+const authResetForm = document.getElementById('auth-reset-form');
+const authResetBackBtn = document.getElementById('auth-reset-back-btn');
+const authNewPasswordForm = document.getElementById('auth-newpassword-form');
+
+// name: 'login' | 'signup' | 'reset' | 'newpassword'
+function showAuthView(name) {
+  authLoginForm.hidden = name !== 'login';
+  authSignupForm.hidden = name !== 'signup';
+  authResetForm.hidden = name !== 'reset';
+  authNewPasswordForm.hidden = name !== 'newpassword';
+  authForgotRow.hidden = name !== 'login';
+  authTabsRow.hidden = name === 'reset' || name === 'newpassword';
+  authMessage.hidden = true;
+  if (name === 'login' || name === 'signup') {
+    document.querySelectorAll('.auth-tab').forEach(t => t.classList.toggle('is-active', t.dataset.authTab === name));
+  }
+}
+
 document.querySelectorAll('.auth-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.auth-tab').forEach(t => t.classList.toggle('is-active', t === tab));
-    authLoginForm.hidden = tab.dataset.authTab !== 'login';
-    authSignupForm.hidden = tab.dataset.authTab !== 'signup';
-    authMessage.hidden = true;
-  });
+  tab.addEventListener('click', () => showAuthView(tab.dataset.authTab));
+});
+authForgotBtn.addEventListener('click', () => showAuthView('reset'));
+authResetBackBtn.addEventListener('click', () => showAuthView('login'));
+
+authResetForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const submitBtn = authResetForm.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  submitBtn.textContent = '전송 중...';
+  authMessage.hidden = true;
+  try {
+    const email = document.getElementById('auth-reset-email').value.trim();
+    const { error } = await sb.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + window.location.pathname,
+    });
+    if (error) throw error;
+    showAuthMessage('이메일로 재설정 링크를 보냈어요. 메일함을 확인해주세요.', true);
+  } catch (err) {
+    console.error(err);
+    showAuthMessage('재설정 링크 전송에 실패했어요: ' + err.message, false);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = '재설정 링크 보내기';
+  }
+});
+
+authNewPasswordForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const submitBtn = authNewPasswordForm.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  submitBtn.textContent = '변경 중...';
+  authMessage.hidden = true;
+  try {
+    const newPassword = document.getElementById('auth-newpassword').value;
+    const { data, error } = await sb.auth.updateUser({ password: newPassword });
+    if (error) throw error;
+    await onAuthSuccess(data.user.id);
+  } catch (err) {
+    console.error(err);
+    showAuthMessage('비밀번호 변경에 실패했어요: ' + err.message, false);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = '비밀번호 변경하기';
+  }
+});
+
+// 이메일로 받은 재설정 링크를 눌러 들어오면 Supabase가 이 이벤트를 발생시켜요.
+sb.auth.onAuthStateChange((event) => {
+  if (event === 'PASSWORD_RECOVERY') {
+    authGate.hidden = false;
+    showAuthView('newpassword');
+  }
 });
 
 function showAuthGate() {

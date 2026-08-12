@@ -32,6 +32,7 @@
       <input type="password" id="auth-login-password" required autocomplete="current-password" placeholder="비밀번호">
       <button type="submit" class="btn btn-primary btn-block">로그인</button>
     </form>
+    <p class="auth-forgot-row"><button type="button" id="auth-forgot-btn" class="auth-link-btn">비밀번호를 잊으셨나요?</button></p>
 
     <form id="auth-signup-form" class="auth-form" hidden>
       <label class="field-label" for="auth-signup-email">이메일</label>
@@ -39,6 +40,21 @@
       <label class="field-label" for="auth-signup-password">비밀번호</label>
       <input type="password" id="auth-signup-password" required autocomplete="new-password" placeholder="6자 이상" minlength="6">
       <button type="submit" class="btn btn-primary btn-block">회원가입</button>
+    </form>
+
+    <form id="auth-reset-form" class="auth-form" hidden>
+      <p class="section-desc" style="margin:0 0 4px;">가입하신 이메일로 재설정 링크를 보내드릴게요.</p>
+      <label class="field-label" for="auth-reset-email">이메일</label>
+      <input type="email" id="auth-reset-email" required autocomplete="email" placeholder="you@example.com">
+      <button type="submit" class="btn btn-primary btn-block">재설정 링크 보내기</button>
+      <button type="button" id="auth-reset-back-btn" class="auth-link-btn">로그인으로 돌아가기</button>
+    </form>
+
+    <form id="auth-newpassword-form" class="auth-form" hidden>
+      <p class="section-desc" style="margin:0 0 4px;">이메일로 받은 링크로 들어오셨어요. 새 비밀번호를 설정해주세요.</p>
+      <label class="field-label" for="auth-newpassword">새 비밀번호</label>
+      <input type="password" id="auth-newpassword" required autocomplete="new-password" placeholder="6자 이상" minlength="6">
+      <button type="submit" class="btn btn-primary btn-block">비밀번호 변경하기</button>
     </form>
 
     <p id="auth-message" class="auth-message" hidden></p>
