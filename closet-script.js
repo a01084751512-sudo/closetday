@@ -762,6 +762,7 @@ function tpoToSlug(tpo) {
    ========================================================= */
 const weatherBtn = document.getElementById('weather-auto-btn');
 const weatherStatus = document.getElementById('weather-status');
+const weatherForecastCard = document.getElementById('weather-forecast-card');
 const generateOutfitBtn = document.getElementById('generate-outfit-btn');
 const outfitResult = document.getElementById('outfit-result');
 
@@ -771,11 +772,39 @@ function mapTempToSeason(temp) {
   if (temp >= 6) return '가을';
   return '겨울';
 }
-function weatherCodeNote(code) {
-  if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return ' 비가 올 수 있어요, 방수 아우터나 우산을 챙기세요.';
-  if (code >= 71 && code <= 77) return ' 눈이 올 수 있어요, 미끄럼 방지 신발을 추천해요.';
-  if (code >= 95) return ' 천둥/번개가 있을 수 있어요, 외출 시 주의하세요.';
+
+// WMO 날씨 코드 + 풍속을 "맑음/흐림/비/눈/바람 많음" 하나로 요약해요.
+const SKY_META = {
+  '맑음': { icon: '☀️', label: '맑음' },
+  '흐림': { icon: '☁️', label: '흐림' },
+  '비': { icon: '🌧️', label: '비' },
+  '눈': { icon: '❄️', label: '눈' },
+  '바람 많음': { icon: '🌬️', label: '바람 많음' },
+};
+function pickSkyFromWeather(code, windspeed) {
+  if ((code >= 71 && code <= 77) || code === 85 || code === 86) return '눈';
+  if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82) || code >= 95) return '비';
+  if (windspeed >= 20) return '바람 많음';
+  if (code >= 1 && code <= 48) return '흐림';
+  return '맑음';
+}
+function weatherCodeNote(sky, windspeed) {
+  if (sky === '비') return ' 비 소식이 있어요, 방수 아우터나 우산을 챙기세요.';
+  if (sky === '눈') return ' 눈이 올 수 있어요, 미끄럼 방지 신발을 추천해요.';
+  if (sky === '바람 많음') return ` 바람이 강해요 (초속 ${(windspeed / 3.6).toFixed(1)}m/s), 겉옷을 여며주세요.`;
   return '';
+}
+
+function renderWeatherForecastCard(temp, sky, windspeed) {
+  const meta = SKY_META[sky];
+  weatherForecastCard.hidden = false;
+  weatherForecastCard.innerHTML = `
+    <span class="weather-forecast-icon">${meta.icon}</span>
+    <div>
+      <p class="weather-forecast-main">${temp}°C · ${meta.label}</p>
+      <p class="weather-forecast-sub">현재 위치 기준 · 풍속 ${Math.round(windspeed)}km/h</p>
+    </div>
+  `;
 }
 
 weatherBtn.addEventListener('click', () => {
@@ -784,6 +813,7 @@ weatherBtn.addEventListener('click', () => {
     return;
   }
   weatherStatus.textContent = '위치 확인 중...';
+  weatherForecastCard.hidden = true;
   navigator.geolocation.getCurrentPosition(
     async (pos) => {
       try {
@@ -793,10 +823,17 @@ weatherBtn.addEventListener('click', () => {
         const data = await res.json();
         const temp = Math.round(data.current_weather.temperature);
         const code = data.current_weather.weathercode;
+        const windspeed = data.current_weather.windspeed;
         const season = mapTempToSeason(temp);
-        const radio = document.querySelector(`input[name="wizard-season"][value="${season}"]`);
-        if (radio) radio.checked = true;
-        weatherStatus.textContent = `현재 위치 기온 ${temp}°C → '${season}'으로 자동 설정했어요.${weatherCodeNote(code)}`;
+        const sky = pickSkyFromWeather(code, windspeed);
+
+        const seasonRadio = document.querySelector(`input[name="wizard-season"][value="${season}"]`);
+        if (seasonRadio) seasonRadio.checked = true;
+        const skyRadio = document.querySelector(`input[name="wizard-sky"][value="${sky}"]`);
+        if (skyRadio) skyRadio.checked = true;
+
+        renderWeatherForecastCard(temp, sky, windspeed);
+        weatherStatus.textContent = `'${season}' · '${sky}'으로 자동 설정했어요.${weatherCodeNote(sky, windspeed)}`;
       } catch (err) {
         weatherStatus.textContent = '날씨 정보를 가져오지 못했어요. 직접 선택해주세요.';
       }
@@ -806,9 +843,21 @@ weatherBtn.addEventListener('click', () => {
   );
 });
 
+const SKY_TIPS = {
+  '비': '☔ 오늘은 비 소식이 있어요. 방수 아우터나 우산을 꼭 챙기세요.',
+  '눈': '❄️ 눈이 올 수 있어요. 미끄럼 방지 신발을 추천해요.',
+  '바람 많음': '🌬️ 바람이 많이 불어요. 겉옷을 여미거나 안에 한 겹 더 입어보세요.',
+  '흐림': '☁️ 흐린 날씨예요. 얇은 겉옷 하나 챙기면 좋아요.',
+};
+function weatherTipHtml(ctx) {
+  const tip = SKY_TIPS[ctx.sky];
+  return tip ? `<p class="weather-tip-note">${tip}</p>` : '';
+}
+
 function getWizardContext() {
   return {
     season: document.querySelector('input[name="wizard-season"]:checked').value,
+    sky: document.querySelector('input[name="wizard-sky"]:checked').value,
     tpo: document.querySelector('input[name="wizard-tpo"]:checked').value,
     mood: document.querySelector('input[name="wizard-mood"]:checked').value,
     personalColor: document.querySelector('input[name="wizard-pc"]:checked').value || null,
@@ -893,7 +942,8 @@ function renderClosetOutfit(needCategories, ctx) {
         <h3>오늘의 추천 코디</h3>
         <span class="outfit-source-badge">내 옷장 코디</span>
       </div>
-      <div class="outfit-meta-tags"><span>${ctx.season}</span><span>${ctx.tpo}</span><span>${ctx.mood}</span>${ctx.personalColor ? `<span>${ctx.personalColor}</span>` : ''}</div>
+      <div class="outfit-meta-tags"><span>${SKY_META[ctx.sky].icon} ${ctx.sky}</span><span>${ctx.season}</span><span>${ctx.tpo}</span><span>${ctx.mood}</span>${ctx.personalColor ? `<span>${ctx.personalColor}</span>` : ''}</div>
+      ${weatherTipHtml(ctx)}
       ${rows}
       ${fitTipHtml()}
       ${tryonTriggerHtml(tryonNames)}
@@ -926,7 +976,8 @@ function renderTrendFallbackOutfit(ctx) {
         <h3>${look.title}</h3>
         <span class="outfit-source-badge is-trend">추천 스타일</span>
       </div>
-      <div class="outfit-meta-tags"><span>${ctx.season}</span><span>${ctx.tpo}</span><span>${ctx.mood}</span></div>
+      <div class="outfit-meta-tags"><span>${SKY_META[ctx.sky].icon} ${ctx.sky}</span><span>${ctx.season}</span><span>${ctx.tpo}</span><span>${ctx.mood}</span></div>
+      ${weatherTipHtml(ctx)}
       <div class="outfit-look-photo"><img src="${look.img}" alt="${look.title}"></div>
       ${itemRows}
       <p class="outfit-fallback-note">내 옷장에 조건에 맞는 옷이 아직 부족해서 트렌드 스타일로 대신 보여드려요. <a href="#" id="fallback-closet-link">내 옷장</a>에 옷을 채워두면 더 정확하게 추천받을 수 있어요.</p>

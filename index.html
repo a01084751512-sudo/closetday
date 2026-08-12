@@ -178,6 +178,8 @@
           <button type="button" id="weather-auto-btn" class="btn btn-outline btn-small">실시간 날씨로 설정</button>
         </div>
         <p id="weather-status" class="weather-status"></p>
+        <div id="weather-forecast-card" class="weather-forecast-card" hidden></div>
+
         <div class="chip-row">
           <input type="radio" name="wizard-season" id="wizard-spring" value="봄" checked>
           <label for="wizard-spring" class="chip">봄</label>
@@ -187,6 +189,20 @@
           <label for="wizard-fall" class="chip">가을</label>
           <input type="radio" name="wizard-season" id="wizard-winter" value="겨울">
           <label for="wizard-winter" class="chip">겨울</label>
+        </div>
+
+        <p class="wizard-sub-label">오늘 하늘은 어때요? <span class="optional-tag">(실시간 날씨로 설정하면 자동으로 골라줘요)</span></p>
+        <div class="chip-row">
+          <input type="radio" name="wizard-sky" id="wizard-sky-clear" value="맑음" checked>
+          <label for="wizard-sky-clear" class="chip">☀️ 맑음</label>
+          <input type="radio" name="wizard-sky" id="wizard-sky-cloudy" value="흐림">
+          <label for="wizard-sky-cloudy" class="chip">☁️ 흐림</label>
+          <input type="radio" name="wizard-sky" id="wizard-sky-rain" value="비">
+          <label for="wizard-sky-rain" class="chip">🌧️ 비</label>
+          <input type="radio" name="wizard-sky" id="wizard-sky-snow" value="눈">
+          <label for="wizard-sky-snow" class="chip">❄️ 눈</label>
+          <input type="radio" name="wizard-sky" id="wizard-sky-windy" value="바람 많음">
+          <label for="wizard-sky-windy" class="chip">🌬️ 바람 많음</label>
         </div>
       </div>
 
