@@ -244,6 +244,26 @@ button { font-family: var(--font-sans); }
 }
 .home-hero h1 { font-size: clamp(1.4rem, 3.4vw, 2.1rem); line-height: 1.36; margin: 0 0 22px; }
 
+/* ===== Horizontal strip with slide arrows ===== */
+.strip-viewport { position: relative; }
+.strip-viewport > div { scroll-behavior: smooth; scroll-snap-type: x proximity; }
+.strip-viewport > div > * { scroll-snap-align: start; }
+
+.strip-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 5;
+  width: 38px; height: 38px; border-radius: 50%;
+  border: 1px solid var(--color-line); background: rgba(255, 254, 251, 0.95);
+  color: var(--color-text); font-size: 1.25rem; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; box-shadow: var(--shadow-card);
+  transition: opacity 0.18s ease, background 0.18s ease;
+}
+.strip-arrow:hover { background: var(--color-accent-soft); border-color: var(--color-accent); }
+.strip-arrow-prev { left: -6px; }
+.strip-arrow-next { right: -6px; }
+.strip-arrow[hidden] { display: none; }
+@media (max-width: 700px) { .strip-arrow { display: none; } }
+
 .trend2026-wrap { margin: 4px 0 34px; }
 .trend2026-grid {
   display: grid;
@@ -443,6 +463,13 @@ button { font-family: var(--font-sans); }
 
 .outfit-look-photo { width: 100%; border-radius: var(--radius-md); overflow: hidden; }
 .outfit-look-photo img { width: 100%; display: block; object-fit: cover; max-height: 360px; }
+.outfit-look-icon {
+  aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: center; font-size: 3.4rem;
+  background: linear-gradient(135deg, var(--color-accent-soft), var(--color-bg));
+}
+.outfit-meta-tags .tag-2026 {
+  background: #FCEFE4; color: #A15A1F; border-color: #F0DCC8; font-weight: 800;
+}
 
 .outfit-item-row { display: flex; align-items: center; gap: 14px; padding: 10px 0; border-top: 1px solid var(--color-line); }
 .outfit-item-row:first-of-type { border-top: none; }
@@ -621,6 +648,10 @@ button { font-family: var(--font-sans); }
 }
 .profile-summary-card h4 { font-size: 0.95rem; margin: 0 0 8px; color: var(--color-accent-dark); }
 .profile-summary-card p { font-size: 0.86rem; color: var(--color-text); margin: 0; opacity: 0.85; }
+.profile-outfit-tip {
+  margin-top: 10px !important; padding-top: 10px; border-top: 1px solid rgba(0,0,0,0.06);
+  font-weight: 700; color: var(--color-accent-dark) !important; opacity: 1 !important;
+}
 .profile-summary-card[hidden] { display: none; }
 
 .fit-tip-note {

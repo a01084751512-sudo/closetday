@@ -27,6 +27,7 @@ const TREND_2026 = [
     id: 't-stripe-01', styleTag: '믹스 스트라이프', title: '믹스 스트라이프 캐주얼룩',
     trendNote: '2026 S/S 런웨이에서 두드러진, 굵기를 믹스한 스트라이프 무드',
     description: '서로 다른 굵기의 스트라이프를 매치해 리듬감을 살린 2026년 트렌드 코디예요.',
+    tpo: ['데일리'], season: ['여름'], mood: ['화사하게', '시크하게'], sky: ['맑음', '흐림'],
     items: [
       { category: 'top', name: '믹스 스트라이프 셔츠', color: '#2C3E50' },
       { category: 'bottom', name: '와이드 데님', color: '#4A6B8A' },
@@ -39,6 +40,7 @@ const TREND_2026 = [
     id: 't-balloon-01', styleTag: '벌룬 팬츠', title: '벌룬 팬츠 캐주얼룩',
     trendNote: '2026년 런웨이와 리얼웨이를 동시에 장악한 벌룬 팬츠 실루엣',
     description: '바람을 머금은 듯 부푼 실루엣의 벌룬 팬츠로 완성한 화제의 트렌드 코디예요.',
+    tpo: ['데일리'], season: ['여름'], mood: ['편안하게', '시크하게'], sky: ['맑음', '흐림'],
     items: [
       { category: 'top', name: '크롭 니트', color: '#EFE9DF' },
       { category: 'bottom', name: '벌룬 팬츠', color: '#C9A77C' },
@@ -50,6 +52,7 @@ const TREND_2026 = [
     id: 't-pink-01', styleTag: '소프트 핑크', title: '파스텔 핑크 무드룩',
     trendNote: '2026 S/S 컬러 트렌드 1위로 꼽힌 소프트 핑크',
     description: '은은한 파스텔 핑크 톤으로 포인트를 준 2026년 컬러 트렌드 코디예요.',
+    tpo: ['데일리', '모임·데이트'], season: ['여름'], mood: ['화사하게', '러블리하게'], sky: ['맑음', '흐림'],
     items: [
       { category: 'top', name: '파스텔 핑크 니트', color: '#E8B4BC' },
       { category: 'bottom', name: '화이트 와이드 팬츠', color: '#F4EFE6' },
@@ -62,6 +65,7 @@ const TREND_2026 = [
     id: 't-denim-01', styleTag: '디스트로이드 데님', title: '디스트로이드 데님 캐주얼룩',
     trendNote: '70년대 무드를 재해석한 2026년 디스트로이드 데님 트렌드',
     description: '빈티지한 디스트로이드 데님으로 완성한 70년대 무드의 캐주얼룩이에요.',
+    tpo: ['데일리'], season: ['여름'], mood: ['시크하게'], sky: ['맑음', '흐림'],
     items: [
       { category: 'top', name: '화이트 반팔티', color: '#FFFFFF' },
       { category: 'bottom', name: '디스트로이드 데님', color: '#5C7A9A' },
@@ -73,6 +77,7 @@ const TREND_2026 = [
     id: 't-eggplant-01', styleTag: '가지색 무드', title: '가지색 블레이저 오피스룩',
     trendNote: "2026 가을 대표 컬러로 꼽힌 '가지색(에그플랜트)'을 활용한 오피스룩",
     description: '짙은 가지색 블레이저로 가을 시즌 컬러 트렌드를 담은 오피스룩이에요.',
+    tpo: ['오피스'], season: ['가을'], mood: ['자신감있게'], sky: ['맑음', '흐림'],
     items: [
       { category: 'outer', name: '가지색 블레이저', color: '#4B2A45' },
       { category: 'top', name: '화이트 셔츠', color: '#FFFFFF' },
@@ -85,6 +90,7 @@ const TREND_2026 = [
     id: 't-shoulder-01', styleTag: '80s 숄더라인', title: '숄더패드 블레이저룩',
     trendNote: '잘록한 허리와 과감해진 숄더라인이 돋아나는 2026 가을 1980년대 무드 트렌드',
     description: '강조된 숄더라인의 블레이저로 80년대 무드를 재해석한 트렌드 코디예요.',
+    tpo: ['오피스', '포멀'], season: ['가을'], mood: ['자신감있게'], sky: ['맑음', '흐림', '바람 많음'],
     items: [
       { category: 'outer', name: '숄더패드 블레이저', color: '#2C3E50' },
       { category: 'top', name: '터틀넥', color: '#1B1B1B' },
@@ -97,6 +103,7 @@ const TREND_2026 = [
     id: 't-texture-01', styleTag: '텍스처 레이어드', title: '벨벳 레더 레이어드룩',
     trendNote: '벨벳과 레더를 매치하는 2026 가을 텍스처 레이어링 트렌드',
     description: '벨벳과 레더 소재를 함께 매치해 깊이감을 더한 가을 트렌드 코디예요.',
+    tpo: ['모임·데이트', '포멀'], season: ['가을'], mood: ['시크하게'], sky: ['맑음', '흐림', '바람 많음'],
     items: [
       { category: 'top', name: '벨벳 톱', color: '#5C2A3A' },
       { category: 'bottom', name: '레더 스커트', color: '#1B1B1B' },
@@ -109,6 +116,7 @@ const TREND_2026 = [
     id: 't-allblack-01', styleTag: '올블랙 파워룩', title: '올블랙 파워 슈트룩',
     trendNote: '밀라노 런웨이를 장악한 2026 가을 올블랙 파워룩 트렌드',
     description: '강렬한 무채색 올블랙 셋업으로 완성한 파워풀한 트렌드 코디예요.',
+    tpo: ['오피스', '포멀'], season: ['가을', '겨울'], mood: ['자신감있게'], sky: ['맑음', '흐림'],
     items: [
       { category: 'outer', name: '블랙 슈트 재킷', color: '#1B1B1B' },
       { category: 'top', name: '블랙 셔츠', color: '#1B1B1B' },
@@ -116,6 +124,78 @@ const TREND_2026 = [
       { category: 'shoes', name: '블랙 더비 슈즈', color: '#1B1B1B' },
     ],
     keyword: '올블랙 슈트 파워룩 2026 트렌드',
+  },
+  {
+    id: 't-mintcore-01', styleTag: '민트코어', title: '민트 가디건 & 화이트 팬츠',
+    trendNote: 'SNS와 매거진을 휩쓴 2026 봄 민트코어(Mint-core) 트렌드',
+    description: '싱그러운 민트 컬러를 위아래로 매치한 2026년 컬러 트렌드 코디예요.',
+    tpo: ['데일리'], season: ['봄', '여름'], mood: ['화사하게'], sky: ['맑음', '흐림'],
+    items: [
+      { category: 'top', name: '민트 니트 가디건', color: '#A8D5C4' },
+      { category: 'bottom', name: '화이트 와이드팬츠', color: '#F4EFE6' },
+      { category: 'shoes', name: '민트 스니커즈', color: '#A8D5C4' },
+    ],
+    keyword: '민트코어 가디건 화이트팬츠 2026 트렌드룩',
+  },
+  {
+    id: 't-layered-01', styleTag: '레이어드 온 레이어드', title: '이너 레이어드 세트',
+    trendNote: '니트 위에 셔츠, 그 위에 베스트까지 겹쳐 입는 2026 가을 레이어드 트렌드',
+    description: '서로 다른 텍스처를 겹겹이 매치해 완성한 2026년 레이어드 코디예요.',
+    tpo: ['데일리'], season: ['가을', '겨울'], mood: ['편안하게', '시크하게'], sky: ['맑음', '흐림', '바람 많음'],
+    items: [
+      { category: 'top', name: '스트라이프 셔츠', color: '#DDE3E8' },
+      { category: 'outer', name: '니트 베스트', color: '#8B6F4E' },
+      { category: 'bottom', name: '와이드 슬랙스', color: '#3A3A3A' },
+    ],
+    keyword: '레이어드룩 니트 베스트 셔츠 2026 트렌드',
+  },
+  {
+    id: 't-cleangirl-01', styleTag: '클린걸', title: '미니멀 클린걸 룩',
+    trendNote: '군더더기 없는 미니멀 스타일링, 2026 클린걸(Clean Girl) 무드',
+    description: '꾸안꾸 느낌으로 깔끔하게 정돈한 2026년 미니멀 트렌드 코디예요.',
+    tpo: ['데일리'], season: ['봄'], mood: ['편안하게'], sky: ['맑음', '흐림'],
+    items: [
+      { category: 'top', name: '화이트 리브탑', color: '#F4EFE6' },
+      { category: 'bottom', name: '스트레이트 데님', color: '#8AA0B8' },
+      { category: 'shoes', name: '로퍼', color: '#5C4A3A' },
+    ],
+    keyword: '클린걸 미니멀 룩 2026 트렌드',
+  },
+  {
+    id: 't-oldmoney-01', styleTag: '올드머니', title: '올드머니 트위드룩',
+    trendNote: '로고 없는 클래식한 럭셔리, 2026 올드머니(Old Money) 트렌드',
+    description: '브랜드 로고 대신 소재와 핏으로 완성한 2026년 클래식 트렌드 코디예요.',
+    tpo: ['오피스', '포멀'], season: ['가을'], mood: ['자신감있게'], sky: ['맑음', '흐림'],
+    items: [
+      { category: 'outer', name: '트위드 재킷', color: '#D8CBB0' },
+      { category: 'top', name: '니트 폴로', color: '#EDE6D6' },
+      { category: 'bottom', name: '슬랙스', color: '#4A4237' },
+    ],
+    keyword: '올드머니 트위드 재킷 2026 트렌드룩',
+  },
+  {
+    id: 't-balletcore-01', styleTag: '발레코어', title: '발레코어 랩 카디건룩',
+    trendNote: '리본과 레그워머로 완성하는 2026 발레코어(Balletcore) 트렌드',
+    description: '발레복에서 영감을 받은 부드럽고 러블리한 2026년 트렌드 코디예요.',
+    tpo: ['모임·데이트'], season: ['봄'], mood: ['러블리하게'], sky: ['맑음'],
+    items: [
+      { category: 'top', name: '랩 카디건', color: '#F0DDE3' },
+      { category: 'acc', name: '니트 레그워머', color: '#E8C9CE' },
+      { category: 'shoes', name: '발레 플랫', color: '#F4EFE6' },
+    ],
+    keyword: '발레코어 랩 카디건 2026 트렌드룩',
+  },
+  {
+    id: 't-gorpcore-01', styleTag: '고프코어', title: '고프코어 아웃도어룩',
+    trendNote: '기능성 아웃도어를 일상으로 들여온 2026 고프코어(Gorpcore) 트렌드',
+    description: '플리스와 카고팬츠로 완성한 실용적인 2026년 아웃도어 트렌드 코디예요.',
+    tpo: ['데일리', '운동'], season: ['가을'], mood: ['편안하게'], sky: ['흐림', '비', '바람 많음'],
+    items: [
+      { category: 'outer', name: '플리스 자켓', color: '#7C8A6E' },
+      { category: 'bottom', name: '카고 팬츠', color: '#5C5A4E' },
+      { category: 'shoes', name: '트레킹화', color: '#3A3A3A' },
+    ],
+    keyword: '고프코어 플리스 카고팬츠 2026 트렌드룩',
   },
 ];
 
@@ -125,79 +205,79 @@ const TREND_LOOKS = [
   {
     id: 'look-01', img: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=500&q=70',
     title: '버건디 롱코트 쇼핑룩', subtitle: '쇼핑하기 좋은 가을 데일리',
-    tpo: ['데일리'], season: ['가을', '겨울'], mood: ['자신감있게'],
+    tpo: ['데일리'], season: ['가을', '겨울'], mood: ['자신감있게'], sky: ['맑음', '흐림', '바람 많음'],
     items: [{ name: '버건디 롱코트', color: '#6E2A32' }, { name: '화이트 이너 톱', color: '#F3F1EA' }, { name: '선글라스', color: '#232323' }],
   },
   {
     id: 'look-02', img: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=500&q=70',
     title: '스트라이프 와이드팬츠 스트릿룩', subtitle: '과감한 스트릿 무드',
-    tpo: ['데일리'], season: ['봄', '여름'], mood: ['화사하게', '시크하게'],
+    tpo: ['데일리'], season: ['봄', '여름'], mood: ['화사하게', '시크하게'], sky: ['맑음', '흐림'],
     items: [{ name: '화이트 크롭탑', color: '#F3F1EA' }, { name: '블랙&화이트 스트라이프 와이드팬츠', color: '#2B2B2B' }, { name: '레드 미니백', color: '#B23A2E' }],
   },
   {
     id: 'look-03', img: 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&w=500&q=70',
     title: '화이트 오프숄더 미니원피스', subtitle: '햇살 좋은 날의 데이트룩',
-    tpo: ['모임·데이트'], season: ['여름'], mood: ['화사하게', '러블리하게'],
+    tpo: ['모임·데이트'], season: ['여름'], mood: ['화사하게', '러블리하게'], sky: ['맑음'],
     items: [{ name: '오프숄더 미니원피스', color: '#F3F1EA' }, { name: '화이트 스니커즈', color: '#EDEAE2' }],
   },
   {
     id: 'look-04', img: 'https://images.unsplash.com/photo-1495385794356-15371f348c31?auto=format&fit=crop&w=500&q=70',
     title: '틸 홀터넥 점프수트', subtitle: '존재감 있는 세미포멀 룩',
-    tpo: ['포멀'], season: ['봄', '가을'], mood: ['자신감있게'],
+    tpo: ['포멀'], season: ['봄', '가을'], mood: ['자신감있게'], sky: ['맑음', '흐림'],
     items: [{ name: '틸 홀터넥 점프수트', color: '#1F6F6B' }],
   },
   {
     id: 'look-05', img: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=500&q=70',
     title: '플로럴 랩원피스', subtitle: '바닷가에서 어울리는 룩',
-    tpo: ['모임·데이트'], season: ['여름'], mood: ['러블리하게'],
+    tpo: ['모임·데이트'], season: ['여름'], mood: ['러블리하게'], sky: ['맑음'],
     items: [{ name: '플로럴 랩원피스', color: '#E7B9C4' }, { name: '스트로우 백', color: '#C9A66B' }],
   },
   {
     id: 'look-06', img: 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=500&q=70',
     title: '그래픽 티셔츠 스트릿룩', subtitle: '무심한 듯 힘 뺀 캐주얼',
-    tpo: ['데일리'], season: ['봄', '여름'], mood: ['시크하게'],
+    tpo: ['데일리'], season: ['봄', '여름'], mood: ['시크하게'], sky: ['맑음', '흐림'],
     items: [{ name: '블랙 그래픽 티셔츠', color: '#1C1C1C' }, { name: '레이어드 쇼츠', color: '#8A8378' }],
   },
   {
     id: 'look-07', img: 'https://images.unsplash.com/photo-1554412933-514a83d2f3c8?auto=format&fit=crop&w=500&q=70',
     title: '핑크 롱코트 가을룩', subtitle: '고풍스러운 골목길 산책',
-    tpo: ['데일리'], season: ['가을'], mood: ['자신감있게'],
+    tpo: ['데일리'], season: ['가을'], mood: ['자신감있게'], sky: ['맑음', '흐림', '비', '바람 많음'],
     items: [{ name: '핑크 롱코트', color: '#D9A9A6' }, { name: '블랙 타이츠', color: '#1C1C1C' }, { name: '블랙 앵클부츠', color: '#2B2118' }],
   },
   {
     id: 'look-08', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=500&q=70',
     title: '블랙 하이패션 코트룩', subtitle: '존재감 있는 겨울 아우터',
-    tpo: ['포멀'], season: ['가을', '겨울'], mood: ['자신감있게'],
+    tpo: ['포멀'], season: ['가을', '겨울'], mood: ['자신감있게'], sky: ['맑음', '흐림', '바람 많음'],
     items: [{ name: '블랙 러플 롱코트', color: '#1C1C1C' }, { name: '와이드브림 햇', color: '#1C1C1C' }],
   },
   {
     id: 'look-09', img: 'https://images.unsplash.com/photo-1479064555552-3ef4979f8908?auto=format&fit=crop&w=500&q=70',
     title: '블랙 수트 포멀룩', subtitle: '신뢰감을 더하는 정장 룩',
-    tpo: ['포멀'], season: ['봄', '가을', '겨울'], mood: ['자신감있게'],
+    tpo: ['포멀'], season: ['봄', '가을', '겨울'], mood: ['자신감있게'], sky: ['맑음', '흐림'],
     items: [{ name: '블랙 수트 자켓', color: '#1C1C1C' }, { name: '버건디 타이', color: '#6E2A32' }, { name: '화이트 셔츠', color: '#F3F1EA' }],
   },
   {
     id: 'look-10', img: 'https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?auto=format&fit=crop&w=500&q=70',
     title: '카멜 코트 & 니트 세트', subtitle: '도심 속 오피스 룩',
-    tpo: ['오피스'], season: ['가을'], mood: ['시크하게'],
+    tpo: ['오피스'], season: ['가을'], mood: ['시크하게'], sky: ['맑음', '흐림', '비', '바람 많음'],
     items: [{ name: '카멜 롱코트', color: '#C9A66B' }, { name: '올리브 니트탑', color: '#7C7A5E' }, { name: '올리브 미디스커트', color: '#7C7A5E' }],
   },
   {
     id: 'look-11', img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=500&q=70',
     title: '데님자켓 후드 레이어드룩', subtitle: '힘 안 준 편안한 조합',
-    tpo: ['데일리'], season: ['가을'], mood: ['편안하게'],
+    tpo: ['데일리'], season: ['가을'], mood: ['편안하게'], sky: ['맑음', '흐림', '바람 많음'],
     items: [{ name: '데님자켓', color: '#5B7A9B' }, { name: '그레이 후드티', color: '#8A8378' }],
   },
   {
     id: 'look-12', img: 'https://images.unsplash.com/photo-1516575150278-77136aed6920?auto=format&fit=crop&w=500&q=70',
     title: '레드 컬러 포인트룩', subtitle: '화사한 컬러감이 포인트',
-    tpo: ['데일리'], season: ['봄', '가을'], mood: ['화사하게'],
+    tpo: ['데일리'], season: ['봄', '가을'], mood: ['화사하게'], sky: ['맑음', '흐림'],
     items: [{ name: '레드 오렌지 톱', color: '#C1502E' }, { name: '데님 소재 아우터', color: '#7A93A6' }],
   },
   {
     id: 'look-13', img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=500&q=70',
     title: '옐로우 트레이닝 세트업', subtitle: '가볍게 몸을 움직이는 날',
-    tpo: ['운동'], season: ['봄', '여름'], mood: ['편안하게'],
+    tpo: ['운동'], season: ['봄', '여름'], mood: ['편안하게'], sky: ['맑음', '흐림'],
     items: [{ name: '옐로우 후드', color: '#E8B23A' }, { name: '옐로우 조거팬츠', color: '#E8B23A' }, { name: '화이트 부츠', color: '#F3F1EA' }],
   },
 ];
@@ -223,32 +303,32 @@ const TRENDING_ITEMS = [
 const SEASONAL_SPECIALS = [
   {
     id: 'special-01', icon: '👙', badgeLabel: '☀️ 여름 스페셜', title: '체크 원피스 수영복', subtitle: '휴가 필수템',
-    tpo: ['운동'], season: ['여름'], mood: ['화사하게'],
+    tpo: ['운동'], season: ['여름'], mood: ['화사하게'], sky: ['맑음'],
     items: [{ name: '원피스 수영복', color: '#2E4A6B' }, { name: '밀짚모자', color: '#D8B27C' }, { name: '비치 샌들', color: '#E8DFCB' }],
   },
   {
     id: 'special-02', icon: '🏊', badgeLabel: '☀️ 여름 스페셜', title: '래쉬가드 세트', subtitle: '물놀이도 스타일있게',
-    tpo: ['운동'], season: ['여름'], mood: ['편안하게'],
+    tpo: ['운동'], season: ['여름'], mood: ['편안하게'], sky: ['맑음', '흐림'],
     items: [{ name: '집업 래쉬가드', color: '#1F3A5F' }, { name: '래쉬가드 반바지', color: '#22242A' }, { name: '아쿠아 슈즈', color: '#3B3B3B' }],
   },
   {
     id: 'special-03', icon: '🏖️', badgeLabel: '☀️ 여름 스페셜', title: '밀짚모자 & 비치 커버업', subtitle: '해변 산책 룩',
-    tpo: ['모임·데이트'], season: ['여름'], mood: ['화사하게', '러블리하게'],
+    tpo: ['모임·데이트'], season: ['여름'], mood: ['화사하게', '러블리하게'], sky: ['맑음'],
     items: [{ name: '크로셰 커버업', color: '#F1E7D9' }, { name: '밀짚모자', color: '#D8B27C' }, { name: '라탄 백', color: '#B08D57' }],
   },
   {
     id: 'special-04', icon: '⛷️', badgeLabel: '❄️ 겨울 스페셜', title: '스키 재킷 & 팬츠 세트', subtitle: '슬로프 위 코디',
-    tpo: ['운동'], season: ['겨울'], mood: ['자신감있게'],
+    tpo: ['운동'], season: ['겨울'], mood: ['자신감있게'], sky: ['눈', '흐림', '바람 많음'],
     items: [{ name: '스키 재킷', color: '#B23A2E' }, { name: '스키 팬츠', color: '#22242A' }, { name: '스키 고글', color: '#3B3B3B' }],
   },
   {
     id: 'special-05', icon: '🧥', badgeLabel: '❄️ 겨울 스페셜', title: '롱패딩 세트', subtitle: '한파에도 든든하게',
-    tpo: ['데일리'], season: ['겨울'], mood: ['편안하게'],
+    tpo: ['데일리'], season: ['겨울'], mood: ['편안하게'], sky: ['눈', '흐림', '바람 많음', '맑음'],
     items: [{ name: '롱패딩', color: '#22242A' }, { name: '니트 목도리', color: '#8C6F52' }, { name: '방한 부츠', color: '#3B2A1E' }],
   },
   {
     id: 'special-06', icon: '🧤', badgeLabel: '❄️ 겨울 스페셜', title: '니트 비니 & 장갑 세트', subtitle: '포인트가 되는 방한템',
-    tpo: ['데일리'], season: ['겨울'], mood: ['편안하게'],
+    tpo: ['데일리'], season: ['겨울'], mood: ['편안하게'], sky: ['눈', '흐림', '바람 많음', '맑음'],
     items: [{ name: '니트 비니', color: '#5E4A36' }, { name: '울 장갑', color: '#8C6F52' }, { name: '니트 목도리', color: '#B7A996' }],
   },
 ];
@@ -709,6 +789,35 @@ function renderPaletteStrip() {
   });
 }
 
+/* ---- 가로 스트립 좌우 슬라이드 버튼 ---- */
+function setupStripArrows() {
+  document.querySelectorAll('.strip-viewport').forEach(viewport => {
+    const strip = viewport.querySelector('[id]');
+    const prev = viewport.querySelector('.strip-arrow-prev');
+    const next = viewport.querySelector('.strip-arrow-next');
+    if (!strip || !prev || !next) return;
+
+    // 카드 한 장 너비 + gap 만큼 이동해서 카드가 잘리지 않게 해요.
+    function step() {
+      const firstCard = strip.firstElementChild;
+      if (!firstCard) return 240;
+      const gap = parseFloat(getComputedStyle(strip).columnGap || '12') || 12;
+      return firstCard.getBoundingClientRect().width + gap;
+    }
+    function updateArrows() {
+      const maxScroll = strip.scrollWidth - strip.clientWidth;
+      prev.hidden = strip.scrollLeft <= 2;
+      next.hidden = strip.scrollLeft >= maxScroll - 2;
+    }
+
+    prev.addEventListener('click', () => { strip.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    next.addEventListener('click', () => { strip.scrollBy({ left: step(), behavior: 'smooth' }); });
+    strip.addEventListener('scroll', updateArrows, { passive: true });
+    window.addEventListener('resize', updateArrows);
+    updateArrows();
+  });
+}
+
 /* ---- quick view modal ---- */
 const quickviewModal = document.getElementById('quickview-modal');
 const quickviewBody = document.getElementById('quickview-body');
@@ -743,11 +852,16 @@ function openQuickView(look) {
 
   document.getElementById('qv-recommend-btn').addEventListener('click', () => {
     quickviewModal.hidden = true;
-    document.getElementById(`wizard-tpo-${tpoToSlug(look.tpo[0])}`)?.click();
+    const tpoEl = document.querySelector(`input[name="wizard-tpo"][value="${look.tpo[0]}"]`);
+    if (tpoEl) tpoEl.checked = true;
     const seasonEl = document.querySelector(`input[name="wizard-season"][value="${look.season[0]}"]`);
     if (seasonEl) seasonEl.checked = true;
     const moodEl = document.querySelector(`input[name="wizard-mood"][value="${look.mood[0]}"]`);
     if (moodEl) moodEl.checked = true;
+    if (look.sky && look.sky.length) {
+      const skyEl = document.querySelector(`input[name="wizard-sky"][value="${look.sky[0]}"]`);
+      if (skyEl) skyEl.checked = true;
+    }
     switchView('styling');
     renderOutfit(getWizardContext());
   });
@@ -894,12 +1008,29 @@ function pickForCategory(category, ctx, excludeId) {
   return null;
 }
 
+// 2026 트렌드 룩을 일반 트렌드 룩과 같은 형태로 변환해서 추천 후보에 함께 넣어요.
+function trend2026AsLook(t) {
+  return {
+    id: t.id, img: null, icon: '🔥',
+    title: t.title, subtitle: t.trendNote,
+    tpo: t.tpo, season: t.season, mood: t.mood, sky: t.sky,
+    items: t.items.map(i => ({ name: i.name, color: i.color })),
+    is2026Trend: true, styleTag: t.styleTag, keyword: t.keyword,
+  };
+}
+
 function pickTrendLook(ctx) {
+  const pool = [...TREND_2026.map(trend2026AsLook), ...TREND_LOOKS];
+  const skyOk = l => !l.sky || l.sky.includes(ctx.sky);
+
+  // 날씨(하늘 상태)를 가장 강하게 반영하고, 그다음 상황·계절·기분 순으로 조건을 완화해요.
   const tiers = [
-    TREND_LOOKS.filter(l => l.tpo.includes(ctx.tpo) && l.season.includes(ctx.season) && l.mood.includes(ctx.mood)),
-    TREND_LOOKS.filter(l => l.tpo.includes(ctx.tpo) && l.season.includes(ctx.season)),
-    TREND_LOOKS.filter(l => l.tpo.includes(ctx.tpo)),
-    TREND_LOOKS,
+    pool.filter(l => skyOk(l) && l.tpo.includes(ctx.tpo) && l.season.includes(ctx.season) && l.mood.includes(ctx.mood)),
+    pool.filter(l => skyOk(l) && l.tpo.includes(ctx.tpo) && l.season.includes(ctx.season)),
+    pool.filter(l => skyOk(l) && l.season.includes(ctx.season)),
+    pool.filter(l => l.tpo.includes(ctx.tpo) && l.season.includes(ctx.season)),
+    pool.filter(l => l.tpo.includes(ctx.tpo)),
+    pool,
   ];
   for (const tier of tiers) {
     if (tier.length > 0) return tier[Math.floor(Math.random() * tier.length)];
@@ -951,6 +1082,7 @@ function renderClosetOutfit(needCategories, ctx) {
     <div class="regenerate-row"><button type="button" id="regenerate-outfit-btn" class="btn btn-outline">다른 조합 더 보기</button></div>
   `;
   document.getElementById('regenerate-outfit-btn').addEventListener('click', () => renderOutfit(ctx));
+  scrollToOutfitResult();
 }
 
 function renderTrendFallbackOutfit(ctx) {
@@ -974,11 +1106,17 @@ function renderTrendFallbackOutfit(ctx) {
     <div class="outfit-card">
       <div class="outfit-card-head">
         <h3>${look.title}</h3>
-        <span class="outfit-source-badge is-trend">추천 스타일</span>
+        <span class="outfit-source-badge is-trend">${look.is2026Trend ? '🔥 2026 트렌드' : '추천 스타일'}</span>
       </div>
-      <div class="outfit-meta-tags"><span>${SKY_META[ctx.sky].icon} ${ctx.sky}</span><span>${ctx.season}</span><span>${ctx.tpo}</span><span>${ctx.mood}</span></div>
+      <div class="outfit-meta-tags">
+        ${look.is2026Trend ? `<span class="tag-2026">${look.styleTag}</span>` : ''}
+        <span>${SKY_META[ctx.sky].icon} ${ctx.sky}</span><span>${ctx.season}</span><span>${ctx.tpo}</span><span>${ctx.mood}</span>
+      </div>
+      ${look.is2026Trend ? `<p class="trend2026-note">${look.subtitle}</p>` : ''}
       ${weatherTipHtml(ctx)}
-      <div class="outfit-look-photo"><img src="${look.img}" alt="${look.title}"></div>
+      ${look.img
+        ? `<div class="outfit-look-photo"><img src="${look.img}" alt="${look.title}"></div>`
+        : `<div class="outfit-look-photo outfit-look-icon">${look.icon || '👗'}</div>`}
       ${itemRows}
       <p class="outfit-fallback-note">내 옷장에 조건에 맞는 옷이 아직 부족해서 트렌드 스타일로 대신 보여드려요. <a href="#" id="fallback-closet-link">내 옷장</a>에 옷을 채워두면 더 정확하게 추천받을 수 있어요.</p>
       ${fitTipHtml()}
@@ -988,6 +1126,14 @@ function renderTrendFallbackOutfit(ctx) {
   `;
   document.getElementById('regenerate-outfit-btn').addEventListener('click', () => renderOutfit(ctx));
   document.getElementById('fallback-closet-link').addEventListener('click', (e) => { e.preventDefault(); switchView('closet'); });
+  scrollToOutfitResult();
+}
+
+// 추천 결과는 위저드 폼 아래에 렌더링돼서, 스크롤해주지 않으면 아무 일도 안 일어난 것처럼 보여요.
+function scrollToOutfitResult() {
+  requestAnimationFrame(() => {
+    outfitResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 }
 
 /* =========================================================
@@ -1568,17 +1714,18 @@ let userProfile = null;
 const profileForm = document.getElementById('profile-form');
 const profileSummary = document.getElementById('profile-summary');
 
+// 체형별 "한 줄 코디" — 추상적인 스타일링 팁 대신, 실제로 매치해볼 수 있는 아이템 조합으로 안내해요.
 const BODY_TYPE_TIPS = {
-  '모래시계형': '허리 라인을 살리는 벨트나 랩 스타일 아이템이 잘 어울려요.',
-  '직사각형': '벨트나 레이어드로 허리 라인에 포인트를 주면 좋아요.',
-  '역삼각형': '하의는 볼륨감 있는 와이드핏으로 밸런스를 맞춰보세요.',
-  '삼각형': '상의에 포인트를 주는 밝은 컬러나 디테일을 더해보세요.',
-  '둥근형': '세로 라인을 강조하는 브이넥이나 일자핏이 잘 어울려요.',
+  '모래시계형': '허리 라인을 살리는 랩 원피스 + 벨트 니트 조합이 잘 어울려요.',
+  '직사각형': '크롭 재킷 + 하이웨이스트 와이드팬츠로 허리 라인을 만들어보세요.',
+  '역삼각형': '심플한 상의 + 볼륨감 있는 와이드 팬츠로 밸런스를 맞춰보세요.',
+  '삼각형': '포인트 있는 상의(퍼프소매·밝은 컬러) + 스트레이트 팬츠를 추천해요.',
+  '둥근형': '브이넥 니트 + 일자핏 슬랙스로 세로 라인을 살려보세요.',
 };
 function fitTipHtml() {
   if (!userProfile || !userProfile.body_type) return '';
   const tip = BODY_TYPE_TIPS[userProfile.body_type];
-  return tip ? `<p class="fit-tip-note">💡 ${userProfile.body_type} 체형이시라면, ${tip}</p>` : '';
+  return tip ? `<p class="fit-tip-note">👗 ${userProfile.body_type} 체형 추천 코디 — ${tip}</p>` : '';
 }
 
 async function loadProfile() {
@@ -1621,7 +1768,7 @@ function renderProfileSummary() {
   profileSummary.innerHTML = `
     <h4>내 프로필</h4>
     <p>${summaryText || '아직 입력한 정보가 없어요'}</p>
-    ${tip ? `<p style="margin-top:8px;">💡 ${tip}</p>` : ''}
+    ${tip ? `<p class="profile-outfit-tip">👗 ${userProfile.body_type} 체형 한 줄 코디 — ${tip}</p>` : ''}
   `;
 }
 
@@ -1789,6 +1936,7 @@ async function init() {
   renderTrendingStrip();
   renderSeasonalStrip();
   renderPaletteStrip();
+  setupStripArrows();
 
   const loggedIn = await initAuth();
   if (loggedIn) {
