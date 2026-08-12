@@ -1319,7 +1319,10 @@ function renderClosetGallery() {
     card.className = 'closet-item-card';
     const tagText = [...item.seasons, ...item.tpo, ...item.mood].join(' · ') || '사계절 · 모든 상황';
     card.innerHTML = `
-      <button type="button" class="item-delete-btn" data-id="${item.id}" aria-label="삭제">✕</button>
+      <div class="card-action-row">
+        <button type="button" class="item-edit-btn" data-id="${item.id}" aria-label="수정">✎</button>
+        <button type="button" class="item-delete-btn" data-id="${item.id}" aria-label="삭제">✕</button>
+      </div>
       <div class="closet-item-thumb"><img src="${item.img}" alt="${item.category}"></div>
       <div class="closet-item-body">
         <p class="closet-item-cat">${item.category}</p>
@@ -1327,6 +1330,10 @@ function renderClosetGallery() {
       </div>
     `;
     closetGallery.appendChild(card);
+  });
+
+  closetGallery.querySelectorAll('.item-edit-btn').forEach(btn => {
+    btn.addEventListener('click', () => openClosetEditModal(btn.dataset.id));
   });
 
   closetGallery.querySelectorAll('.item-delete-btn').forEach(btn => {
@@ -1346,6 +1353,63 @@ function renderClosetGallery() {
     });
   });
 }
+
+/* ---- 옷장 아이템 수정 ---- */
+const closetEditModal = document.getElementById('closet-edit-modal');
+const closetEditForm = document.getElementById('closet-edit-form');
+let editingClosetId = null;
+
+document.getElementById('closet-edit-close-btn').addEventListener('click', () => { closetEditModal.hidden = true; });
+closetEditModal.addEventListener('click', (e) => { if (e.target === closetEditModal) closetEditModal.hidden = true; });
+
+function setCheckboxGroup(name, values) {
+  document.querySelectorAll(`input[name="${name}"]`).forEach(el => { el.checked = values.includes(el.value); });
+}
+
+function openClosetEditModal(id) {
+  const item = closetItems.find(i => i.id === id);
+  if (!item) return;
+  editingClosetId = id;
+
+  const catEl = document.querySelector(`input[name="edit-category"][value="${item.category}"]`);
+  if (catEl) catEl.checked = true;
+  setCheckboxGroup('edit-season', item.seasons);
+  setCheckboxGroup('edit-tpo', item.tpo);
+  setCheckboxGroup('edit-mood', item.mood);
+  const pcEl = document.querySelector(`input[name="edit-pc"][value="${item.personalColor || ''}"]`);
+  if (pcEl) pcEl.checked = true;
+
+  closetEditModal.hidden = false;
+}
+
+closetEditForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!editingClosetId) return;
+  const submitBtn = closetEditForm.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  submitBtn.textContent = '저장 중...';
+  try {
+    const { error } = await sb.from('closet_items').update({
+      category: closetEditForm.querySelector('input[name="edit-category"]:checked').value,
+      seasons: Array.from(closetEditForm.querySelectorAll('input[name="edit-season"]:checked')).map(el => el.value),
+      tpo: Array.from(closetEditForm.querySelectorAll('input[name="edit-tpo"]:checked')).map(el => el.value),
+      mood: Array.from(closetEditForm.querySelectorAll('input[name="edit-mood"]:checked')).map(el => el.value),
+      personal_color: closetEditForm.querySelector('input[name="edit-pc"]:checked').value || null,
+    }).eq('id', editingClosetId);
+    if (error) throw error;
+
+    closetEditModal.hidden = true;
+    editingClosetId = null;
+    await loadClosetItems();
+    renderClosetGallery();
+  } catch (err) {
+    console.error(err);
+    alert('수정하지 못했어요: ' + err.message);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = '수정 내용 저장하기';
+  }
+});
 
 /* =========================================================
    Neighborhood C2C market
@@ -1609,7 +1673,10 @@ function renderReferenceGrid() {
     card.className = 'reference-card';
     const isMine = item.ownerId === currentUserId;
     card.innerHTML = `
-      ${isMine ? `<button type="button" class="item-delete-btn" data-id="${item.id}" aria-label="삭제">✕</button>` : ''}
+      ${isMine ? `<div class="card-action-row">
+        <button type="button" class="item-edit-btn" data-id="${item.id}" aria-label="수정">✎</button>
+        <button type="button" class="item-delete-btn" data-id="${item.id}" aria-label="삭제">✕</button>
+      </div>` : ''}
       <a href="${item.videoUrl}" target="_blank" rel="noopener" class="reference-card-thumb">${PLATFORM_ICON[item.platform] || '🔗'}</a>
       <div class="reference-card-body">
         <span class="reference-platform-badge">${item.platform}</span>
@@ -1619,6 +1686,10 @@ function renderReferenceGrid() {
       </div>
     `;
     referenceGrid.appendChild(card);
+  });
+
+  referenceGrid.querySelectorAll('.item-edit-btn').forEach(btn => {
+    btn.addEventListener('click', () => openReferenceEditModal(btn.dataset.id));
   });
 
   referenceGrid.querySelectorAll('.item-delete-btn').forEach(btn => {
@@ -1636,6 +1707,55 @@ function renderReferenceGrid() {
     });
   });
 }
+
+/* ---- 레퍼런스 수정 ---- */
+const referenceEditModal = document.getElementById('reference-edit-modal');
+const referenceEditForm = document.getElementById('reference-edit-form');
+let editingReferenceId = null;
+
+document.getElementById('reference-edit-close-btn').addEventListener('click', () => { referenceEditModal.hidden = true; });
+referenceEditModal.addEventListener('click', (e) => { if (e.target === referenceEditModal) referenceEditModal.hidden = true; });
+
+function openReferenceEditModal(id) {
+  const item = referenceItems.find(i => i.id === id);
+  if (!item) return;
+  editingReferenceId = id;
+  document.getElementById('edit-reference-url').value = item.videoUrl;
+  document.getElementById('edit-reference-title').value = item.title;
+  document.getElementById('edit-reference-creator').value = item.creatorName || '';
+  document.getElementById('edit-reference-tags').value = item.tags.join(', ');
+  referenceEditModal.hidden = false;
+}
+
+referenceEditForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!editingReferenceId) return;
+  const submitBtn = referenceEditForm.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  submitBtn.textContent = '저장 중...';
+  try {
+    const videoUrl = document.getElementById('edit-reference-url').value.trim();
+    const { error } = await sb.from('style_references').update({
+      video_url: videoUrl,
+      platform: detectPlatform(videoUrl),
+      title: document.getElementById('edit-reference-title').value.trim(),
+      creator_name: document.getElementById('edit-reference-creator').value.trim() || null,
+      tags: document.getElementById('edit-reference-tags').value.split(',').map(t => t.trim()).filter(Boolean),
+    }).eq('id', editingReferenceId);
+    if (error) throw error;
+
+    referenceEditModal.hidden = true;
+    editingReferenceId = null;
+    await loadReferences();
+    renderReferenceGrid();
+  } catch (err) {
+    console.error(err);
+    alert('수정하지 못했어요: ' + err.message);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = '수정 내용 저장하기';
+  }
+});
 
 /* =========================================================
    퍼스널 컬러 자가진단 (LOOKCODI에서 통합)

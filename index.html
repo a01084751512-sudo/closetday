@@ -709,6 +709,86 @@
   </div>
 </div>
 
+<!-- 옷장 아이템 수정 모달 -->
+<div id="closet-edit-modal" class="modal-overlay" hidden>
+  <div class="modal-box">
+    <button type="button" class="modal-close" id="closet-edit-close-btn" aria-label="닫기">✕</button>
+    <h3 class="qv-title">옷 정보 수정</h3>
+    <p class="qv-sub">태그를 정확히 달수록 맞춤 코디 추천이 좋아져요.</p>
+    <form id="closet-edit-form" class="meta-form" style="box-shadow:none; padding:0;">
+      <fieldset class="chip-group">
+        <legend>카테고리</legend>
+        <div class="chip-row">
+          <input type="radio" name="edit-category" id="edit-cat-top" value="상의"><label for="edit-cat-top" class="chip">상의</label>
+          <input type="radio" name="edit-category" id="edit-cat-bottom" value="하의"><label for="edit-cat-bottom" class="chip">하의</label>
+          <input type="radio" name="edit-category" id="edit-cat-outer" value="아우터"><label for="edit-cat-outer" class="chip">아우터</label>
+          <input type="radio" name="edit-category" id="edit-cat-shoes" value="신발"><label for="edit-cat-shoes" class="chip">신발</label>
+          <input type="radio" name="edit-category" id="edit-cat-acc" value="액세서리"><label for="edit-cat-acc" class="chip">액세서리</label>
+        </div>
+      </fieldset>
+      <fieldset class="chip-group">
+        <legend>어울리는 계절</legend>
+        <div class="chip-row">
+          <input type="checkbox" name="edit-season" id="edit-season-spring" value="봄"><label for="edit-season-spring" class="chip">봄</label>
+          <input type="checkbox" name="edit-season" id="edit-season-summer" value="여름"><label for="edit-season-summer" class="chip">여름</label>
+          <input type="checkbox" name="edit-season" id="edit-season-fall" value="가을"><label for="edit-season-fall" class="chip">가을</label>
+          <input type="checkbox" name="edit-season" id="edit-season-winter" value="겨울"><label for="edit-season-winter" class="chip">겨울</label>
+        </div>
+      </fieldset>
+      <fieldset class="chip-group">
+        <legend>어울리는 상황</legend>
+        <div class="chip-row">
+          <input type="checkbox" name="edit-tpo" id="edit-tpo-daily" value="데일리"><label for="edit-tpo-daily" class="chip">데일리</label>
+          <input type="checkbox" name="edit-tpo" id="edit-tpo-office" value="오피스"><label for="edit-tpo-office" class="chip">오피스</label>
+          <input type="checkbox" name="edit-tpo" id="edit-tpo-date" value="모임·데이트"><label for="edit-tpo-date" class="chip">모임·데이트</label>
+          <input type="checkbox" name="edit-tpo" id="edit-tpo-active" value="운동"><label for="edit-tpo-active" class="chip">운동</label>
+          <input type="checkbox" name="edit-tpo" id="edit-tpo-formal" value="포멀"><label for="edit-tpo-formal" class="chip">포멀</label>
+        </div>
+      </fieldset>
+      <fieldset class="chip-group">
+        <legend>어울리는 기분</legend>
+        <div class="chip-row">
+          <input type="checkbox" name="edit-mood" id="edit-mood-comfy" value="편안하게"><label for="edit-mood-comfy" class="chip">편안하게</label>
+          <input type="checkbox" name="edit-mood" id="edit-mood-confident" value="자신감있게"><label for="edit-mood-confident" class="chip">자신감있게</label>
+          <input type="checkbox" name="edit-mood" id="edit-mood-lovely" value="러블리하게"><label for="edit-mood-lovely" class="chip">러블리하게</label>
+          <input type="checkbox" name="edit-mood" id="edit-mood-chic" value="시크하게"><label for="edit-mood-chic" class="chip">시크하게</label>
+          <input type="checkbox" name="edit-mood" id="edit-mood-bright" value="화사하게"><label for="edit-mood-bright" class="chip">화사하게</label>
+        </div>
+      </fieldset>
+      <fieldset class="chip-group">
+        <legend>어울리는 퍼스널 컬러</legend>
+        <div class="chip-row">
+          <input type="radio" name="edit-pc" id="edit-pc-none" value=""><label for="edit-pc-none" class="chip">상관없음</label>
+          <input type="radio" name="edit-pc" id="edit-pc-spring" value="봄 웜톤"><label for="edit-pc-spring" class="chip">봄 웜톤</label>
+          <input type="radio" name="edit-pc" id="edit-pc-summer" value="여름 쿨톤"><label for="edit-pc-summer" class="chip">여름 쿨톤</label>
+          <input type="radio" name="edit-pc" id="edit-pc-fall" value="가을 웜톤"><label for="edit-pc-fall" class="chip">가을 웜톤</label>
+          <input type="radio" name="edit-pc" id="edit-pc-winter" value="겨울 쿨톤"><label for="edit-pc-winter" class="chip">겨울 쿨톤</label>
+        </div>
+      </fieldset>
+      <button type="submit" class="btn btn-primary btn-block">수정 내용 저장하기</button>
+    </form>
+  </div>
+</div>
+
+<!-- 레퍼런스 수정 모달 -->
+<div id="reference-edit-modal" class="modal-overlay" hidden>
+  <div class="modal-box">
+    <button type="button" class="modal-close" id="reference-edit-close-btn" aria-label="닫기">✕</button>
+    <h3 class="qv-title">레퍼런스 수정</h3>
+    <form id="reference-edit-form" class="meta-form" style="box-shadow:none; padding:0;">
+      <label class="field-label" for="edit-reference-url">영상 링크</label>
+      <input type="url" id="edit-reference-url" required>
+      <label class="field-label" for="edit-reference-title">제목</label>
+      <input type="text" id="edit-reference-title" required maxlength="60">
+      <label class="field-label" for="edit-reference-creator">크리에이터 <span class="optional-tag">(선택)</span></label>
+      <input type="text" id="edit-reference-creator" maxlength="40">
+      <label class="field-label" for="edit-reference-tags">태그 <span class="optional-tag">(쉼표로 구분)</span></label>
+      <input type="text" id="edit-reference-tags" maxlength="60">
+      <button type="submit" class="btn btn-primary btn-block">수정 내용 저장하기</button>
+    </form>
+  </div>
+</div>
+
 <!-- 서비스 소개 모달 -->
 <div id="about-modal" class="modal-overlay" hidden>
   <div class="modal-box modal-box-wide">
