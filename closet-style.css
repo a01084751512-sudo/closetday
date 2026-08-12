@@ -521,6 +521,13 @@ button { font-family: var(--font-sans); }
 .market-sub { font-size: 0.75rem; color: var(--color-text-soft); }
 .market-desc { font-size: 0.79rem; color: var(--color-text-soft); }
 
+.colorguide-wrap { margin: 4px 0 36px; }
+
+/* ===== Personal color quiz ===== */
+.quiz-toggle-row { margin: 4px 0 16px; }
+.palette-row { display: flex; gap: 8px; margin: 12px 0; }
+.palette-swatch { width: 30px; height: 30px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.08); display: inline-block; }
+
 /* ===== My page (profile) ===== */
 .profile-grid-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 @media (max-width: 480px) { .profile-grid-row { grid-template-columns: 1fr; } }

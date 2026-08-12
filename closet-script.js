@@ -1057,6 +1057,76 @@ function renderReferenceGrid() {
 }
 
 /* =========================================================
+   퍼스널 컬러 자가진단 (LOOKCODI에서 통합)
+   ========================================================= */
+const PERSONAL_COLOR_TYPES = {
+  springWarm: {
+    label: '봄 웜톤',
+    desc: '화사하고 생기 있는 분위기가 어울려요. 카멜, 코랄, 피치, 황금빛 노랑처럼 밝고 따뜻한 컬러가 잘 맞아요.',
+    palette: ['#F2B6A0', '#F6C75A', '#E2574C', '#E8A87C', '#FAD9C1'],
+    metal: '골드',
+  },
+  autumnWarm: {
+    label: '가을 웜톤',
+    desc: '차분하고 깊이감 있는 분위기가 어울려요. 카멜, 와인, 브라운처럼 그윽한 톤이 고급스러운 느낌을 줘요.',
+    palette: ['#A86B3C', '#7B2D33', '#5C4632', '#8B5E34', '#C98A4B'],
+    metal: '골드',
+  },
+  summerCool: {
+    label: '여름 쿨톤',
+    desc: '부드럽고 화사한 분위기가 어울려요. 화이트와 블루를 머금은 파스텔 톤이 자연스럽게 잘 맞아요.',
+    palette: ['#F4EFE6', '#C9D6E3', '#D6C9E0', '#E8B4BC', '#A9B8C9'],
+    metal: '실버',
+  },
+  winterCool: {
+    label: '겨울 쿨톤',
+    desc: '차갑고 시크한 분위기가 어울려요. 선명하고 고대비인 컬러, 블랙과 화이트가 강한 인상을 줘요.',
+    palette: ['#1B1B1B', '#0E3B43', '#7B1E3A', '#2C3E50', '#FFFFFF'],
+    metal: '실버',
+  },
+};
+const QUIZ_TYPE_TO_PC = { springWarm: '봄 웜톤', autumnWarm: '가을 웜톤', summerCool: '여름 쿨톤', winterCool: '겨울 쿨톤' };
+
+const colorquizToggleBtn = document.getElementById('colorquiz-toggle-btn');
+const colorquizPanel = document.getElementById('colorquiz-panel');
+const colorquizResult = document.getElementById('colorquiz-result');
+const colorquizSubmitBtn = document.getElementById('colorquiz-submit-btn');
+
+colorquizToggleBtn.addEventListener('click', () => {
+  colorquizPanel.hidden = !colorquizPanel.hidden;
+});
+
+colorquizSubmitBtn.addEventListener('click', () => {
+  const answers = ['quiz-vein', 'quiz-metal', 'quiz-white', 'quiz-color']
+    .map(name => document.querySelector(`input[name="${name}"]:checked`).value);
+  const warmCount = answers.filter(a => a === 'warm').length;
+  const group = warmCount >= 2 ? 'warm' : 'cool';
+  const mood = document.querySelector('input[name="quiz-mood"]:checked').value;
+  const type = group === 'warm' ? (mood === 'soft' ? 'springWarm' : 'autumnWarm') : (mood === 'soft' ? 'summerCool' : 'winterCool');
+  renderColorQuizResult(type);
+});
+
+function renderColorQuizResult(type) {
+  const info = PERSONAL_COLOR_TYPES[type];
+  const swatches = info.palette.map(c => `<span class="palette-swatch" style="background:${c}"></span>`).join('');
+  colorquizResult.hidden = false;
+  colorquizResult.innerHTML = `
+    <h4>진단 결과: ${info.label}</h4>
+    <p>${info.desc}</p>
+    <div class="palette-row">${swatches}</div>
+    <p style="margin-top:8px;">✓ ${info.metal} 액세서리가 잘 어울려요.</p>
+    <button type="button" class="btn btn-primary btn-small" id="colorquiz-apply-btn" style="margin-top:12px;">이 결과를 마이페이지에 반영하기</button>
+  `;
+  colorquizResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  document.getElementById('colorquiz-apply-btn').addEventListener('click', () => {
+    const target = document.querySelector(`input[name="profile-pc"][value="${QUIZ_TYPE_TO_PC[type]}"]`);
+    if (target) target.checked = true;
+    alert('프로필에 반영했어요. 아래 "프로필 저장하기" 버튼을 눌러 저장해주세요.');
+  });
+}
+
+/* =========================================================
    My page — profile & fit tips
    ========================================================= */
 let userProfile = null;
